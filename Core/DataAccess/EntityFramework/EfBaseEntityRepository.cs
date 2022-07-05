@@ -20,7 +20,7 @@ namespace Core.DataAccess.EntityFramework
 
         public void Delete(TEntity entity)
         {
-            using (TContext context = new TContext())
+            using (TContext context = new())
             {
                 context.Entry(entity).State = EntityState.Deleted;
                 context.SaveChanges();
@@ -29,7 +29,7 @@ namespace Core.DataAccess.EntityFramework
 
         public TEntity Get(Expression<Func<TEntity, bool>> filter)
         {
-            using (TContext context = new TContext())
+            using (TContext context = new())
             {
                 return context.Set<TEntity>().SingleOrDefault(filter);
             }
@@ -37,7 +37,7 @@ namespace Core.DataAccess.EntityFramework
 
         public List<TEntity> GetAll(Expression<Func<TEntity, bool>> filter = null)
         {
-            using (TContext context = new TContext())
+            using (TContext context = new())
             {
                 return filter == null ? context.Set<TEntity>().ToList() : context.Set<TEntity>().Where(filter).ToList();
             }
@@ -45,7 +45,7 @@ namespace Core.DataAccess.EntityFramework
 
         public void Update(TEntity entity)
         {
-            using (TContext context = new TContext())
+            using (TContext context = new())
             {
                 context.Entry(entity).State = EntityState.Modified;
                 context.SaveChanges();
