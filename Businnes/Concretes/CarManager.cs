@@ -61,7 +61,7 @@ namespace Businnes.Concretes
 
         public DataResult<Car> GetById(int id)
         {
-            return new SuccessDataResult<Car>(_carRepository.Get(c => c.Id == id));
+            return new SuccessDataResult<Car>(_carRepository.Get(c => c.Id == id), "Car information specified by id is listed");
         }
 
         public DataResult<List<Car>> GetByPrice(int min, int max)

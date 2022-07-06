@@ -12,17 +12,18 @@ namespace Entities.Concretes
         public int ColourId { get; set; }
         public string Model { get; set; }
         public int ModelYear { get; set; }
-        public string Description { get; set; }
+        public string? Description { get; set; }
         public decimal Price { get; set; }
         public bool Active { get; set; }
         public bool Deleted { get; set; }
 
 
 
-        public Brand Brand { get; set; }
-        public GearType GearType { get; set; }
-        public FuelType FuelType { get; set; }
-        public Colour Colour { get; set; }
-        public List<RentDetail> RentDetails { get; set; }
+        public virtual Brand? Brand { get; set; }
+        public virtual GearType? GearType { get; set; }
+        public virtual FuelType? FuelType { get; set; }
+        public virtual Colour? Colour { get; set; }
+
+        public virtual List<RentDetail>? RentDetails { get; set; }
     }
 }

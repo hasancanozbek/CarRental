@@ -8,7 +8,7 @@ namespace DataAccess.Concretes.EntityFramework.Configurations
     {
         public void Configure(EntityTypeBuilder<Car> builder)
         {
-            //Configuration codes
+            //Configuration codes 
         }
     }
 }
