@@ -1,5 +1,6 @@
 ﻿using Entities.Concretes;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace DataAccess.Concretes.EntityFramework
 {
@@ -22,8 +23,7 @@ namespace DataAccess.Concretes.EntityFramework
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
-
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             base.OnModelCreating(modelBuilder);
         }
     }
