@@ -1,4 +1,5 @@
 ﻿
+using AutoMapper;
 using Businnes.Abstracts;
 using Core.Utilities.Results;
 using DataAccess.Abstracts;
@@ -10,72 +11,86 @@ namespace Businnes.Concretes
     public class CarManager : ICarService
     {
         private readonly ICarRepository _carRepository;
-        public CarManager(ICarRepository carRepository)
+        private readonly IMapper _mapper;
+        public CarManager(ICarRepository carRepository, IMapper mapper)
         {
             _carRepository = carRepository;
+            _mapper = mapper;
         }
 
 
-        public Result Add(Car car)
+        public Result Add(CarAddDto car)
         {
-            _carRepository.Add(car);
-            return new SuccessResult("Car added to database successfully.");
+            if(car.Model.Length > 2 && car.Price >= 0)
+            {
+                var carToAdded = _mapper.Map<Car>(car);
+                _carRepository.Add(carToAdded);
+                return new SuccessResult("Car added to database successfully.");
+            }
+            return new ErrorResult("Given car informations is invalid. Try again.");
         }
 
-        public Result Delete(Car car)
+        public Result Delete(int id)
         {
-            _carRepository.Delete(car);
+            _carRepository.Delete(id);
             return new SuccessResult("Car removed from database successfully.");
         }
 
-        public DataResult<List<Car>> GetAll()
+        public DataResult<List<CarDto>> GetAll()
         {
-            return new SuccessDataResult<List<Car>>(_carRepository.GetAll(),"All cars listed.");
+            var cars = _carRepository.GetAllCars();
+            return new SuccessDataResult<List<CarDto>>(cars,"All cars listed.");
         }
 
-        public DataResult<List<Car>> GetAllByFuelType(int fuelId)
+        public DataResult<List<CarFeatureDto>> GetAllByBrand(int brandId)
         {
-            return new SuccessDataResult<List<Car>>(_carRepository.GetAll(c => c.FuelTypeId == fuelId), "Cars with desired fuel type are listed.");
+            var cars = _carRepository.GetAll(c => c.BrandId == brandId);
+            var carDtos = _mapper.Map<List<CarFeatureDto>>(cars);
+            return new SuccessDataResult<List<CarFeatureDto>>(carDtos, "Cars of the desired brand are listed.");
         }
 
-        public DataResult<List<Car>> GetAllByGearType(int gearId)
+        public DataResult<List<CarFeatureDto>> GetAllByFuelType(int fuelId)
         {
-            return new SuccessDataResult<List<Car>>(_carRepository.GetAll(c => c.GearTypeId == gearId), "Cars with desired gear type are listed.");
+            var cars = _carRepository.GetAll(c => c.FuelTypeId == fuelId);
+            var carDtos = _mapper.Map<List<CarFeatureDto>>(cars);
+            return new SuccessDataResult<List<CarFeatureDto>>(carDtos, "Cars with desired fuel type are listed.");
         }
 
-        public DataResult<List<Car>> GetAllByYear(int min, int max)
+        public DataResult<List<CarFeatureDto>> GetAllByGearType(int gearId)
         {
-            return new SuccessDataResult<List<Car>>(_carRepository.GetAll(c => c.ModelYear >= min && c.ModelYear <= max), "Cars are listed according to the desired year range.");
+            var cars = _carRepository.GetAll(c => c.GearTypeId == gearId);
+            var carDtos = _mapper.Map<List<CarFeatureDto>>(cars);
+            return new SuccessDataResult<List<CarFeatureDto>>(carDtos, "Cars with desired gear type are listed.");
         }
 
-        public DataResult<List<CarDto>> GetAllCarInfo()
+        public DataResult<List<CarFeatureDto>> GetAllByYear(int min, int max)
         {
-            // Dto yapısı DataAccess'e yazılacak.
-            throw new NotImplementedException();
+            var cars = _carRepository.GetAll(c => c.ModelYear >= min && c.ModelYear <= max);
+            var carDtos = _mapper.Map<List<CarFeatureDto>>(cars);
+            return new SuccessDataResult<List<CarFeatureDto>>(carDtos, "Cars are listed according to the desired year range.");
         }
 
-        public DataResult<List<Car>> GetByColour(int colour)
+        public DataResult<List<CarFeatureDto>> GetByColour(int colour)
         {
-            return new SuccessDataResult<List<Car>>(_carRepository.GetAll(c => c.ColourId == colour), "Cars with desired colour are listed.");
+            var cars = _carRepository.GetAll(c => c.ColourId == colour);
+            var carDtos = _mapper.Map<List<CarFeatureDto>>(cars);
+            return new SuccessDataResult<List<CarFeatureDto>>(carDtos, "Cars with desired colour are listed.");
         }
 
-        public DataResult<Car> GetById(int id)
+        public DataResult<CarDto> GetById(int id)
         {
-            return new SuccessDataResult<Car>(_carRepository.Get(c => c.Id == id), "Car information specified by id is listed");
+            var car = _carRepository.GetCar(c => c.Id == id);
+            return new SuccessDataResult<CarDto>(car, "Car information specified by id is listed.");
         }
 
-        public DataResult<List<Car>> GetByPrice(int min, int max)
+        public DataResult<List<CarFeatureDto>> GetByPrice(int min, int max)
         {
-            return new SuccessDataResult<List<Car>>(_carRepository.GetAll(c => c.Price >= min && c.Price <= max), "Cars are listed according to the desired price range.");
+            var cars = _carRepository.GetAll(c => c.Price >= min && c.Price <= max);
+            var carDtos = _mapper.Map<List<CarFeatureDto>>(cars);
+            return new SuccessDataResult<List<CarFeatureDto>>(carDtos, "Cars are listed according to the desired price range.");
         }
 
-        public DataResult<CarDto> GetCarInfo(int id)
-        {
-            //Dto yapısı DataAccess'e yazılacak.
-            throw new NotImplementedException();
-        }
-
-        public Result Update(Car car)
+        public Result Update(CarUpdateDto car)
         {
             _carRepository.Update(car);
             return new SuccessResult("Car information updated.");

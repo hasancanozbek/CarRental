@@ -2,22 +2,22 @@
 using Core.Utilities.Results;
 using Entities.Concretes;
 using Entities.DTOs;
+using System.Linq.Expressions;
 
 namespace Businnes.Abstracts
 {
     public interface ICarService
     {
-        Result Add(Car car);
-        Result Delete(Car car);
-        Result Update(Car car);
-        DataResult<Car> GetById(int id);
-        DataResult<List<Car>> GetAll();
-        DataResult<List<Car>> GetByPrice(int min, int max);
-        DataResult<List<Car>> GetAllByGearType(int gearId);
-        DataResult<List<Car>> GetAllByFuelType(int fuelId);
-        DataResult<CarDto> GetCarInfo(int id);
-        DataResult<List<CarDto>> GetAllCarInfo();
-        DataResult<List<Car>> GetByColour(int colour);
-        DataResult<List<Car>> GetAllByYear(int min, int max);
+        Result Add(CarAddDto car);
+        Result Delete(int id);
+        Result Update(CarUpdateDto car);
+        DataResult<CarDto> GetById(int id);
+        DataResult<List<CarDto>> GetAll();
+        DataResult<List<CarFeatureDto>> GetByPrice(int min, int max);
+        DataResult<List<CarFeatureDto>> GetAllByGearType(int gearId);
+        DataResult<List<CarFeatureDto>> GetAllByFuelType(int fuelId);
+        DataResult<List<CarFeatureDto>> GetByColour(int colour);
+        DataResult<List<CarFeatureDto>> GetAllByYear(int min, int max);
+        DataResult<List<CarFeatureDto>> GetAllByBrand(int brandId);
     }
 }

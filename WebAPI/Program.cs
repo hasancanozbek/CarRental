@@ -1,5 +1,6 @@
 using Businnes.Abstracts;
 using Businnes.Concretes;
+using Businnes.Mapping;
 using DataAccess.Abstracts;
 using DataAccess.Concretes.EntityFramework;
 
@@ -16,8 +17,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<ICarService, CarManager>();
 builder.Services.AddSingleton<ICarRepository, EfCarRepository>();
 
-
-
+builder.Services.AddAutoMapper(typeof(MapProfile));
 
 //----------------------------
 

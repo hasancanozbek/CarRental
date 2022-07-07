@@ -24,6 +24,9 @@ namespace DataAccess.Concretes.EntityFramework
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+            modelBuilder.Entity<Car>().HasQueryFilter(p => p.Deleted == false);
+
             base.OnModelCreating(modelBuilder);
         }
     }

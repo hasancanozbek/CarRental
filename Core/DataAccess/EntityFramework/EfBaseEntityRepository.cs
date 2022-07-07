@@ -9,7 +9,7 @@ namespace Core.DataAccess.EntityFramework
         where TEntity : class, IEntity, new()
         where TContext : DbContext, new()
     {
-        public void Add(TEntity entity)
+        public virtual void Add(TEntity entity)
         {
             using (TContext context = new())
             {
@@ -18,7 +18,7 @@ namespace Core.DataAccess.EntityFramework
             }
         }
 
-        public void Delete(TEntity entity)
+        public virtual void Delete(TEntity entity)
         {
             using (TContext context = new())
             {
@@ -43,7 +43,7 @@ namespace Core.DataAccess.EntityFramework
             }
         }
 
-        public void Update(TEntity entity)
+        public virtual void Update(TEntity entity)
         {
             using (TContext context = new())
             {

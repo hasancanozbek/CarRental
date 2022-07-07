@@ -8,7 +8,8 @@ namespace DataAccess.Concretes.EntityFramework.Configurations
     {
         public void Configure(EntityTypeBuilder<Car> builder)
         {
-            //Configuration codes 
+            builder.Property(x => x.Deleted).HasDefaultValue(false);
+            builder.Property(x => x.Active).HasDefaultValue(true);
         }
     }
 }
