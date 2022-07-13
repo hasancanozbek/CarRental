@@ -1,7 +1,10 @@
 ﻿
 using Autofac;
+using Autofac.Extras.DynamicProxy;
 using Businnes.Abstracts;
 using Businnes.Concretes;
+using Castle.DynamicProxy;
+using Core.Utilities.Interceptors;
 using DataAccess.Abstracts;
 using DataAccess.Concretes.EntityFramework;
 using Module = Autofac.Module;
@@ -14,6 +17,13 @@ namespace Businnes.DependencyResolvers.Autofac
         {
             builder.RegisterType<CarManager>().As<ICarService>().SingleInstance();
             builder.RegisterType<EfCarRepository>().As<ICarRepository>().SingleInstance();
+            var assembly = System.Reflection.Assembly.GetExecutingAssembly();
+
+            builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces()
+                .EnableInterfaceInterceptors(new ProxyGenerationOptions()
+                {
+                    Selector = new AspectInterceptorSelector()
+                }).SingleInstance();
 
         }
     }

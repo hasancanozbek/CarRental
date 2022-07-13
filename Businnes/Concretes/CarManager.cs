@@ -2,6 +2,7 @@
 using AutoMapper;
 using Businnes.Abstracts;
 using Businnes.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstracts;
@@ -21,10 +22,9 @@ namespace Businnes.Concretes
             _mapper = mapper;
         }
 
-
+        [ValidationAspect(typeof(CarValidator))]
         public Result Add(CarAddDto car)
         {
-            ValidationTool.Validate(new CarValidator(), car);
             var carToAdded = _mapper.Map<Car>(car);
             _carRepository.Add(carToAdded);
             return new SuccessResult("Car added to database successfully.");
