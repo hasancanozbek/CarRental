@@ -1,10 +1,13 @@
 ﻿
 using AutoMapper;
 using Businnes.Abstracts;
+using Businnes.ValidationRules.FluentValidation;
+using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstracts;
 using Entities.Concretes;
 using Entities.DTOs;
+using FluentValidation;
 
 namespace Businnes.Concretes
 {
@@ -21,13 +24,10 @@ namespace Businnes.Concretes
 
         public Result Add(CarAddDto car)
         {
-            if(car.Model.Length > 2 && car.Price >= 0)
-            {
-                var carToAdded = _mapper.Map<Car>(car);
-                _carRepository.Add(carToAdded);
-                return new SuccessResult("Car added to database successfully.");
-            }
-            return new ErrorResult("Given car informations is invalid. Try again.");
+            ValidationTool.Validate(new CarValidator(), car);
+            var carToAdded = _mapper.Map<Car>(car);
+            _carRepository.Add(carToAdded);
+            return new SuccessResult("Car added to database successfully.");
         }
 
         public Result Delete(int id)
@@ -39,7 +39,7 @@ namespace Businnes.Concretes
         public DataResult<List<CarDto>> GetAll()
         {
             var cars = _carRepository.GetAllCars();
-            return new SuccessDataResult<List<CarDto>>(cars,"All cars listed.");
+            return new SuccessDataResult<List<CarDto>>(cars, "All cars listed.");
         }
 
         public DataResult<List<CarFeatureDto>> GetAllByBrand(int brandId)

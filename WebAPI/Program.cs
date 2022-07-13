@@ -1,11 +1,8 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
-using Businnes.Abstracts;
-using Businnes.Concretes;
 using Businnes.DependencyResolvers.Autofac;
 using Businnes.Mapping;
-using DataAccess.Abstracts;
-using DataAccess.Concretes.EntityFramework;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
