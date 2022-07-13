@@ -1,5 +1,8 @@
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using Businnes.Abstracts;
 using Businnes.Concretes;
+using Businnes.DependencyResolvers.Autofac;
 using Businnes.Mapping;
 using DataAccess.Abstracts;
 using DataAccess.Concretes.EntityFramework;
@@ -14,10 +17,13 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 //----------------------------
-builder.Services.AddSingleton<ICarService, CarManager>();
-builder.Services.AddSingleton<ICarRepository, EfCarRepository>();
 
+//AutoMapper
 builder.Services.AddAutoMapper(typeof(MapProfile));
+
+//Autofac 
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder => containerBuilder.RegisterModule(new AutofacBusinnesModule()));
 
 //----------------------------
 
