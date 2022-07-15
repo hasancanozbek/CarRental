@@ -13,6 +13,9 @@ namespace Businnes.Mapping
             CreateMap<Car, CarUpdateDto>().ReverseMap();
             CreateMap<Car, CarDto>().ReverseMap();
             CreateMap<Car, CarFeatureDto>().ReverseMap();
+
+
+            CreateMap<Customer, CustomerDto>().ReverseMap();
         }
     }
 }

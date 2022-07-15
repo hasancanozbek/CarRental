@@ -18,6 +18,14 @@ namespace Core.DataAccess.EntityFramework
             }
         }
 
+        public bool Any(Expression<Func<TEntity, bool>> filter)
+        {
+            using (TContext context = new())
+            {
+                return context.Set<TEntity>().Any(filter);
+            }
+        }
+
         public virtual void Delete(TEntity entity)
         {
             using (TContext context = new())

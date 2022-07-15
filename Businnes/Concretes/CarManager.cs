@@ -3,12 +3,10 @@ using AutoMapper;
 using Businnes.Abstracts;
 using Businnes.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
-using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstracts;
 using Entities.Concretes;
 using Entities.DTOs;
-using FluentValidation;
 
 namespace Businnes.Concretes
 {
