@@ -13,7 +13,10 @@ namespace DataAccess.Concretes.EntityFramework
             {
                 var brand = context.Brands.SingleOrDefault(b => b.Id == entity.Id);
                 brand.IsDeleted = true;
-
+                context.Cars.Where(c => c.BrandId == brand.Id).ToList().ForEach(c =>
+                {
+                    c.Active = false;
+                });
                 context.SaveChanges();
             }
         }

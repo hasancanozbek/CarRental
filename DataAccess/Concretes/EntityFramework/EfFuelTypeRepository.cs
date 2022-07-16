@@ -13,6 +13,10 @@ namespace DataAccess.Concretes.EntityFramework
             {
                 var fuelType = context.FuelTypes.SingleOrDefault(f => f.Id == entity.Id);
                 fuelType.IsDeleted = true;
+                context.Cars.Where(c => c.FuelTypeId == fuelType.Id).ToList().ForEach(c =>
+                {
+                    c.Active = false;
+                });
                 context.SaveChanges();
             }
         }

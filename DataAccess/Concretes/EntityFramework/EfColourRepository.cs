@@ -13,6 +13,10 @@ namespace DataAccess.Concretes.EntityFramework
             {
                 var colour = context.Colours.SingleOrDefault(c => c.Id == entity.Id);
                 colour.IsDeleted = true;
+                context.Cars.Where(c => c.ColourId == colour.Id).ToList().ForEach(c =>
+                {
+                    c.Active = false;
+                });
                 context.SaveChanges();
             }
         }

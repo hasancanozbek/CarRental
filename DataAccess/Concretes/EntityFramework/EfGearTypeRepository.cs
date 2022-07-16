@@ -13,6 +13,10 @@ namespace DataAccess.Concretes.EntityFramework
             {
                 var gearType = context.GearTypes.SingleOrDefault(g => g.Id == entity.Id);
                 gearType.IsDeleted = true;
+                context.Cars.Where(c => c.GearTypeId == gearType.Id).ToList().ForEach(c =>
+                {
+                    c.Active = false;
+                });
                 context.SaveChanges();
             }
         }
