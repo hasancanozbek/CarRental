@@ -1,13 +1,15 @@
 ﻿
 using Core.DataAccess;
 using Entities.Concretes;
-using Entities.DTOs;
 
 namespace DataAccess.Abstracts
 {
     public interface ICustomerRepository : IEntityRepository<Customer>
     {
         void Delete(int id);
-        void Update(CustomerDto customer);
+
+        //Hatalar giderilecek.
+        void RentCar(Customer customer, Car car, string originAddress, string? returnAddress);
+        void ReturnCar(Car car);
     }
 }

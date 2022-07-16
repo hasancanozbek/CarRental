@@ -21,10 +21,9 @@ namespace Businnes.Concretes
         }
 
         [ValidationAspect(typeof(CustomerValidator))]
-        public Result Add(CustomerDto customer)
+        public Result Add(Customer customer)
         {
-            var customerToAdded = _mapper.Map<Customer>(customer);
-            _customerRepository.Add(customerToAdded);
+            _customerRepository.Add(customer);
             return new SuccessResult("Customer added to database successfully.");
         }
 
@@ -48,7 +47,19 @@ namespace Businnes.Concretes
             return new SuccessDataResult<CustomerDto>(customerDto, "Customer information specified by id is listed.");
         }
 
-        public Result Update(CustomerDto customer)
+        //Metod refactor edilecek.
+        public Result RentCar(Customer customer, Car car, string originAddress, string? returnAddress)
+        {
+            _customerRepository.RentCar(customer,car,originAddress,returnAddress);
+            return new SuccessResult($"The requested car ,{car.Brand.BrandName} {car.Model}, has been successfully leased to the {customer.FirstName} {customer.LastName}");
+        }
+
+        public Result ReturnCar(Car car)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Result Update(Customer customer)
         {
             _customerRepository.Update(customer);
             return new SuccessResult("Customer informations updated.");

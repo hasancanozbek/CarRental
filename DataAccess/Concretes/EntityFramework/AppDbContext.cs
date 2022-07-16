@@ -26,6 +26,7 @@ namespace DataAccess.Concretes.EntityFramework
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
             modelBuilder.Entity<Car>().HasQueryFilter(p => p.Deleted == false);
+            modelBuilder.Entity<Brand>().HasQueryFilter(b => b.IsDeleted == false);
 
             base.OnModelCreating(modelBuilder);
         }

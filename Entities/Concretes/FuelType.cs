@@ -1,5 +1,6 @@
 ﻿
 using Core.Entities;
+using System.Text.Json.Serialization;
 
 namespace Entities.Concretes
 {
@@ -9,7 +10,7 @@ namespace Entities.Concretes
         public string Fuel { get; set; }
 
 
-
-        public List<Car> Cars { get; set; }
+        [JsonIgnore]
+        public List<Car>? Cars { get; set; }
     }
 }

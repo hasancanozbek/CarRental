@@ -20,7 +20,9 @@ namespace Businnes.ValidationRules.FluentValidation
 
             RuleFor(c => c.FuelTypeId).GreaterThan(0).NotNull().NotEmpty();
 
-            RuleFor(c => c.Model).NotNull().NotEmpty().NotNull().NotEmpty();
+            RuleFor(c => c.Model).NotNull().NotEmpty().MaximumLength(45);
+
+            RuleFor(c => c.Description).MaximumLength(255).NotEmpty();
         }
     }
 }

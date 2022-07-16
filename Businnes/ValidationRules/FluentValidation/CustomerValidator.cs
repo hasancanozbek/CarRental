@@ -1,10 +1,10 @@
 ﻿
-using Entities.DTOs;
+using Entities.Concretes;
 using FluentValidation;
 
 namespace Businnes.ValidationRules.FluentValidation
 {
-    public class CustomerValidator : AbstractValidator<CustomerDto>
+    public class CustomerValidator : AbstractValidator<Customer>
     {
         public CustomerValidator()
         {

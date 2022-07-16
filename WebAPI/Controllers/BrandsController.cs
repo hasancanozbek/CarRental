@@ -1,26 +1,25 @@
 ﻿using Businnes.Abstracts;
 using Entities.Concretes;
-using Entities.DTOs;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CustomersController : ControllerBase
+    public class BrandsController : ControllerBase
     {
-        private readonly ICustomerService _customerService;
+        private readonly IBrandService brandService;
 
-        public CustomersController(ICustomerService customerService)
+        public BrandsController(IBrandService brandService)
         {
-            _customerService = customerService;
+            this.brandService = brandService;
         }
 
-
         [HttpPost("Add")]
-        public IActionResult Add(Customer car)
+        public IActionResult Add(Brand brand)
         {
-            var result = _customerService.Add(car);
+            var result = brandService.Add(brand);
             if (result.Status)
             {
                 return Ok(result);
@@ -30,9 +29,9 @@ namespace WebAPI.Controllers
 
 
         [HttpDelete("Delete")]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(Brand brand)
         {
-            var result = _customerService.Delete(id);
+            var result = brandService.Delete(brand);
             if (result.Status)
             {
                 return Ok(result);
@@ -41,9 +40,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPut("Update")]
-        public IActionResult Update(Customer customer)
+        public IActionResult Update(Brand brand)
         {
-            var result = _customerService.Update(customer);
+            var result = brandService.Update(brand);
             if (result.Status)
             {
                 return Ok(result);
@@ -54,7 +53,7 @@ namespace WebAPI.Controllers
         [HttpGet("GetById")]
         public IActionResult Get(int id)
         {
-            var result = _customerService.GetById(id);
+            var result = brandService.GetById(id);
             if (result.Status)
             {
                 return Ok(result);
@@ -65,24 +64,12 @@ namespace WebAPI.Controllers
         [HttpGet("GetAll")]
         public IActionResult GetAll()
         {
-            var result = _customerService.GetAll();
+            var result = brandService.GetAll();
             if (result.Status)
             {
                 return Ok(result);
             }
             return BadRequest(result);
         }
-
-        //Parametre hatası düzeltilecek
-        //[HttpPut("RentCar")]
-        //public IActionResult RentCar(Customer customer, Car car, string originAddress, string returnAddress)
-        //{
-        //    var result = _customerService.RentCar(customer, car, originAddress, returnAddress);
-        //    if (result.Status)
-        //    {
-        //        return Ok(result);
-        //    }
-        //    return BadRequest(result);
-        //}
     }
 }

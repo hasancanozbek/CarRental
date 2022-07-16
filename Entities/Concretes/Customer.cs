@@ -1,6 +1,7 @@
 ﻿
 using Core.Entities;
 using Entities.Abstracts;
+using System.Text.Json.Serialization;
 
 namespace Entities.Concretes
 {
@@ -12,7 +13,7 @@ namespace Entities.Concretes
         public string Address { get; set; }
 
 
-
-        public List<RentDetail> RentDetails { get; set; }
+        [JsonIgnore]
+        public List<RentDetail>? RentDetails { get; set; }
     }
 }
