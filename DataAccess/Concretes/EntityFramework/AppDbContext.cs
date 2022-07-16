@@ -25,7 +25,9 @@ namespace DataAccess.Concretes.EntityFramework
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
-            modelBuilder.Entity<Car>().HasQueryFilter(p => p.Deleted == false);
+            modelBuilder.Entity<Car>().HasQueryFilter(c => c.Deleted == false && 
+            c.FuelType.IsDeleted == false && c.GearType.IsDeleted == false && c.Colour.IsDeleted == false);
+
             modelBuilder.Entity<Brand>().HasQueryFilter(b => b.IsDeleted == false);
             modelBuilder.Entity<GearType>().HasQueryFilter(b => b.IsDeleted == false);
             modelBuilder.Entity<FuelType>().HasQueryFilter(b => b.IsDeleted == false);

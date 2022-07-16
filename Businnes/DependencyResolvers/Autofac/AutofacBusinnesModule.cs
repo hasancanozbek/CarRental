@@ -27,10 +27,10 @@ namespace Businnes.DependencyResolvers.Autofac
             builder.RegisterType<GearTypeManager>().As<IGearTypeService>().SingleInstance();
             builder.RegisterType<EfGearTypeRepository>().As<IGearTypeRepository>().SingleInstance();
 
-            //builder.RegisterType<FuelTypeManager>().As<IFuelTypeService>().SingleInstance();
+            builder.RegisterType<FuelTypeManager>().As<IFuelTypeService>().SingleInstance();
             builder.RegisterType<EfFuelTypeRepository>().As<IFuelTypeRepository>().SingleInstance();
 
-            //builder.RegisterType<ColourManager>().As<IColourService>().SingleInstance();
+            builder.RegisterType<ColourManager>().As<IColourService>().SingleInstance();
             builder.RegisterType<EfColourRepository>().As<IColourRepository>().SingleInstance();
 
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
