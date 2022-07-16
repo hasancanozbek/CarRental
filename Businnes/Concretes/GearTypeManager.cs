@@ -16,27 +16,32 @@ namespace Businnes.Concretes
 
         public DataResult<GearType> Add(GearType gearType)
         {
-            throw new NotImplementedException();
+            gearTypeRepository.Add(gearType);
+            return new SuccessDataResult<GearType>(gearType,"Gear type added to database.");
         }
 
         public Result Delete(GearType gearType)
         {
-            throw new NotImplementedException();
+            gearTypeRepository.Delete(gearType);
+            return new SuccessResult("Gear type removed from database.");
         }
 
         public DataResult<List<GearType>> GetAll()
         {
-            throw new NotImplementedException();
+            var gearTypes = gearTypeRepository.GetAll();
+            return new SuccessDataResult<List<GearType>>(gearTypes,"All gear types listed.");
         }
 
         public DataResult<GearType> GetById(int id)
         {
-            throw new NotImplementedException();
+            var gearType = gearTypeRepository.Get(g => g.Id == id);
+            return new SuccessDataResult<GearType>(gearType, "The desired gear type is listed according to the id.");
         }
 
         public DataResult<GearType> Update(GearType gearType)
         {
-            throw new NotImplementedException();
+            gearTypeRepository.Update(gearType);
+            return new SuccessDataResult<GearType>(gearType,"Gear type information updated.");
         }
     }
 }

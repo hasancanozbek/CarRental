@@ -27,6 +27,9 @@ namespace DataAccess.Concretes.EntityFramework
 
             modelBuilder.Entity<Car>().HasQueryFilter(p => p.Deleted == false);
             modelBuilder.Entity<Brand>().HasQueryFilter(b => b.IsDeleted == false);
+            modelBuilder.Entity<GearType>().HasQueryFilter(b => b.IsDeleted == false);
+            modelBuilder.Entity<FuelType>().HasQueryFilter(b => b.IsDeleted == false);
+            modelBuilder.Entity<Colour>().HasQueryFilter(b => b.IsDeleted == false);
 
             base.OnModelCreating(modelBuilder);
         }

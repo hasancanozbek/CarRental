@@ -7,6 +7,7 @@ namespace Entities.Concretes
     {
         public int Id { get; set; }
         public string Gear { get; set; }
+        public bool IsDeleted { get; set; }
 
 
         [JsonIgnore]
