@@ -12,8 +12,7 @@ namespace Businnes.Abstracts
         Result Delete(int id);
         DataResult<CustomerDto> GetById(int id);
         DataResult<List<CustomerDto>> GetAll();
-        //Hatalar giderilecek.
-        Result RentCar(Customer customer, Car car, string originAddress, string? returnAddress);
-        Result ReturnCar(Car car);
+        Result RentCar(int customerId, int carId, string originAddress, string returnAddress);
+        Result ReturnCar(int carId);
     }
 }

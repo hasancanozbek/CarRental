@@ -2,6 +2,7 @@
 using Core.DataAccess.EntityFramework;
 using DataAccess.Abstracts;
 using Entities.Concretes;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Concretes.EntityFramework
 {
@@ -17,39 +18,37 @@ namespace DataAccess.Concretes.EntityFramework
             }
         }
 
-        //Hatalar giderilecek
-        public void RentCar(Customer customer, Car car, string originAddress, string? returnAddress)
+        public void RentCar(int customerId, int carId, string originAddress, string returnAddress)
         {
             using (AppDbContext context = new())
             {
-                customer.RentDetails.Add(new RentDetail
+                var customer = context.Customers.SingleOrDefault(customer => customer.Id == customerId);
+                var car = context.Cars.SingleOrDefault(car => car.Id == carId);
+                context.RentDetails.Add(new RentDetail()
                 {
-                    CarId = car.Id,
-                    CustomerId = customer.Id,
+                    CustomerId = customerId,
+                    CarId = carId,
                     Price = car.Price,
-                    RentalDate = DateTime.UtcNow,
+                    RentalDate = DateTime.Now,
                     ReturnDate = null,
                     OriginAddress = originAddress,
                     ReturnAddress = returnAddress
                 });
                 car.Active = false;
-                context.Cars.Update(car);
 
                 context.SaveChanges();
             }
         }
 
-        public void ReturnCar(Car car)
+        public void ReturnCar(int carId)
         {
             using (AppDbContext context = new())
             {
-                var rentDetail = car.RentDetails.SingleOrDefault(c => c.CarId == car.Id);
-                rentDetail.ReturnDate = DateTime.UtcNow;
-                rentDetail.Car.Active = true;
-                if (rentDetail.ReturnAddress == null)
-                {
-                    rentDetail.ReturnAddress = "Şubeden teslim alınmıştır.";
-                }
+                var car = context.Cars.IgnoreQueryFilters().SingleOrDefault(car => car.Id == carId);
+                var rentDetail = context.RentDetails.SingleOrDefault(rentDetail => rentDetail.CarId == carId);
+                rentDetail.ReturnDate = DateTime.Now;
+                car.Active = true;
+
                 context.SaveChanges();
             }
         }

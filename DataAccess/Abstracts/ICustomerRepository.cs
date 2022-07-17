@@ -9,7 +9,7 @@ namespace DataAccess.Abstracts
         void Delete(int id);
 
         //Hatalar giderilecek.
-        void RentCar(Customer customer, Car car, string originAddress, string? returnAddress);
-        void ReturnCar(Car car);
+        void RentCar(int customerId, int carId, string originAddress, string returnAddress);
+        void ReturnCar(int carId);
     }
 }

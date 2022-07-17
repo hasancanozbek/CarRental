@@ -73,16 +73,26 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        //Parametre hatası düzeltilecek
-        //[HttpPut("RentCar")]
-        //public IActionResult RentCar(Customer customer, Car car, string originAddress, string returnAddress)
-        //{
-        //    var result = _customerService.RentCar(customer, car, originAddress, returnAddress);
-        //    if (result.Status)
-        //    {
-        //        return Ok(result);
-        //    }
-        //    return BadRequest(result);
-        //}
+        [HttpPost("RentCar")]
+        public IActionResult RentCar(int customerId, int carId, string originAddress, string returnAddress)
+        {
+            var result = _customerService.RentCar(customerId, carId, originAddress, returnAddress);
+            if (result.Status)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpPost("ReturnCar")]
+        public IActionResult ReturnCar(int carId)
+        {
+            var result = _customerService.ReturnCar(carId);
+            if (result.Status)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
     }
 }

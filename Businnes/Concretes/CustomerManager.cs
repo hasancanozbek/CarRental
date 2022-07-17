@@ -47,16 +47,16 @@ namespace Businnes.Concretes
             return new SuccessDataResult<CustomerDto>(customerDto, "Customer information specified by id is listed.");
         }
 
-        //Metod refactor edilecek.
-        public Result RentCar(Customer customer, Car car, string originAddress, string? returnAddress)
+        public Result RentCar(int customerId, int carId, string originAddress, string returnAddress)
         {
-            _customerRepository.RentCar(customer,car,originAddress,returnAddress);
-            return new SuccessResult($"The requested car ,{car.Brand.BrandName} {car.Model}, has been successfully leased to the {customer.FirstName} {customer.LastName}");
+            _customerRepository.RentCar(customerId, carId, originAddress, returnAddress);
+            return new SuccessResult("Car rented successfully.");
         }
 
-        public Result ReturnCar(Car car)
+        public Result ReturnCar(int carId)
         {
-            throw new NotImplementedException();
+            _customerRepository.ReturnCar(carId);
+            return new SuccessResult("Car returned successfully");
         }
 
         public Result Update(Customer customer)
