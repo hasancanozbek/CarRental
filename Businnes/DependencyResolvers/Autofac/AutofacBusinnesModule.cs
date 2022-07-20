@@ -1,15 +1,15 @@
 ﻿
 using Autofac;
 using Autofac.Extras.DynamicProxy;
-using Businnes.Abstracts;
-using Businnes.Concretes;
+using Business.Abstracts;
+using Business.Concretes;
 using Castle.DynamicProxy;
 using Core.Utilities.Interceptors;
 using DataAccess.Abstracts;
 using DataAccess.Concretes.EntityFramework;
 using Module = Autofac.Module;
 
-namespace Businnes.DependencyResolvers.Autofac
+namespace Business.DependencyResolvers.Autofac
 {
     public class AutofacBusinnesModule : Module
     {
@@ -32,6 +32,9 @@ namespace Businnes.DependencyResolvers.Autofac
 
             builder.RegisterType<ColourManager>().As<IColourService>().SingleInstance();
             builder.RegisterType<EfColourRepository>().As<IColourRepository>().SingleInstance();
+
+            builder.RegisterType<RentDetailManager>().As<IRentDetailService>().SingleInstance();
+            builder.RegisterType<EfRentDetailRepository>().As<IRentDetailRepository>().SingleInstance();
 
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 

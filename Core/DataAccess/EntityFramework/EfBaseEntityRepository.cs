@@ -22,7 +22,7 @@ namespace Core.DataAccess.EntityFramework
         {
             using (TContext context = new())
             {
-                return context.Set<TEntity>().Any(filter);
+                return context.Set<TEntity>().Where(filter).AsNoTracking().ToList().Any();
             }
         }
 

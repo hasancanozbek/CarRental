@@ -4,7 +4,7 @@ using Entities.Concretes;
 using Entities.DTOs;
 using System.Linq.Expressions;
 
-namespace Businnes.Abstracts
+namespace Business.Abstracts
 {
     public interface ICarService
     {

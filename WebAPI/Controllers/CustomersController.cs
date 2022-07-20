@@ -1,4 +1,4 @@
-﻿using Businnes.Abstracts;
+﻿using Business.Abstracts;
 using Entities.Concretes;
 using Entities.DTOs;
 using Microsoft.AspNetCore.Mvc;
@@ -88,6 +88,28 @@ namespace WebAPI.Controllers
         public IActionResult ReturnCar(int carId)
         {
             var result = _customerService.ReturnCar(carId);
+            if (result.Status)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpGet("GetAllRentDetailsByCustomerId")]
+        public IActionResult GetAllRentDetailsByCustomerId(int customerId)
+        {
+            var result = _customerService.GetAllRentDetailsByCustomerId(customerId);
+            if (result.Status)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpGet("GetRentDetailById")]
+        public IActionResult GetRentDetailById(int id)
+        {
+            var result = _customerService.GetRentDetailById(id);
             if (result.Status)
             {
                 return Ok(result);

@@ -3,7 +3,7 @@ using AutoMapper;
 using Entities.Concretes;
 using Entities.DTOs;
 
-namespace Businnes.Mapping
+namespace Business.Mapping
 {
     public class MapProfile : Profile
     {

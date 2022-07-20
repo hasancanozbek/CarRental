@@ -1,28 +1,36 @@
 ﻿
 using AutoMapper;
-using Businnes.Abstracts;
-using Businnes.ValidationRules.FluentValidation;
+using Business.Abstracts;
+using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstracts;
 using Entities.Concretes;
 using Entities.DTOs;
 
-namespace Businnes.Concretes
+namespace Business.Concretes
 {
     public class CustomerManager : ICustomerService
     {
         private readonly ICustomerRepository _customerRepository;
+        private readonly IRentDetailService _rentDetailService;
         private readonly IMapper _mapper;
-        public CustomerManager(ICustomerRepository customerRepository, IMapper mapper)
+        public CustomerManager(ICustomerRepository customerRepository, IMapper mapper, IRentDetailService rentDetailService)
         {
             this._customerRepository = customerRepository;
             _mapper = mapper;
+            _rentDetailService = rentDetailService;
         }
 
         [ValidationAspect(typeof(CustomerValidator))]
         public Result Add(Customer customer)
         {
+            var result = BusinessRules.Run(CheckCustomerEmailExist(customer.Email));
+            if (result != null)
+            {
+                return result;
+            }
             _customerRepository.Add(customer);
             return new SuccessResult("Customer added to database successfully.");
         }
@@ -40,6 +48,12 @@ namespace Businnes.Concretes
             return new SuccessDataResult<List<CustomerDto>>(customerDtos,"All customers listed.");
         }
 
+        public DataResult<List<RentDetail>> GetAllRentDetailsByCustomerId(int customerId)
+        {
+            var rentDetails = _rentDetailService.GetAllRentDetails(r => r.CustomerId == customerId);
+            return new SuccessDataResult<List<RentDetail>>(rentDetails.Data, "Rent details specified by customer id is listed.");
+        }
+
         public DataResult<CustomerDto> GetById(int id)
         {
             var customer = _customerRepository.Get(c => c.Id == id);
@@ -47,8 +61,19 @@ namespace Businnes.Concretes
             return new SuccessDataResult<CustomerDto>(customerDto, "Customer information specified by id is listed.");
         }
 
+        public DataResult<RentDetail> GetRentDetailById(int id)
+        {
+            var rentDetail = _rentDetailService.GetRentDetail(r => r.Id == id);
+            return new SuccessDataResult<RentDetail>(rentDetail.Data, "Rent detail specified by id is listed.");
+        }
+
         public Result RentCar(int customerId, int carId, string originAddress, string returnAddress)
         {
+            var result = BusinessRules.Run(CheckCustomerHaveActiveRental(customerId));
+            if(result != null)
+            {
+                return result;
+            }
             _customerRepository.RentCar(customerId, carId, originAddress, returnAddress);
             return new SuccessResult("Car rented successfully.");
         }
@@ -63,6 +88,28 @@ namespace Businnes.Concretes
         {
             _customerRepository.Update(customer);
             return new SuccessResult("Customer informations updated.");
+        }
+
+        
+
+        private Result CheckCustomerEmailExist(string email)
+        {
+            var result = _customerRepository.Any(c => c.Email == email);
+            if (result)
+            {
+                return new ErrorResult("Email registered before. Please enter a new email address.");
+            }
+            return new SuccessResult();
+        }
+
+        private Result CheckCustomerHaveActiveRental(int customerId)
+        {
+            var result = _rentDetailService.GetAllRentDetails(r => r.CustomerId == customerId);
+            if(result.Data == null)
+            {
+                return new ErrorResult("The car was previously rented but not delivered. Please return the existing car before renting a new one.");
+            }
+            return new SuccessResult();
         }
     }
 }

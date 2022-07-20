@@ -3,7 +3,7 @@ using Core.Utilities.Results;
 using Entities.Concretes;
 using Entities.DTOs;
 
-namespace Businnes.Abstracts
+namespace Business.Abstracts
 {
     public interface ICustomerService
     {
@@ -14,5 +14,7 @@ namespace Businnes.Abstracts
         DataResult<List<CustomerDto>> GetAll();
         Result RentCar(int customerId, int carId, string originAddress, string returnAddress);
         Result ReturnCar(int carId);
+        DataResult<List<RentDetail>> GetAllRentDetailsByCustomerId(int customerId);
+        DataResult<RentDetail> GetRentDetailById(int id);
     }
 }

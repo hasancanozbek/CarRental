@@ -1,4 +1,5 @@
 ﻿using Core.Entities;
+using System.Text.Json.Serialization;
 
 namespace Entities.Concretes
 {
@@ -14,8 +15,9 @@ namespace Entities.Concretes
         public string? ReturnAddress { get; set; }
 
 
-
+        [JsonIgnore]
         public Customer Customer { get; set; }
+        [JsonIgnore]
         public Car Car { get; set; }
     }
 }

@@ -2,7 +2,7 @@
 using Entities.DTOs;
 using FluentValidation;
 
-namespace Businnes.ValidationRules.FluentValidation
+namespace Business.ValidationRules.FluentValidation
 {
     public class CarValidator : AbstractValidator<CarAddDto>
     {

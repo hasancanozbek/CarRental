@@ -5,7 +5,7 @@ using Entities.Concretes;
 
 namespace DataAccess.Concretes.EntityFramework
 {
-    public class EfRentDetailRepository : EfBaseEntityRepository<RentDetail,AppDbContext> , IRentDetailRepository
+    public class EfRentDetailRepository : EfBaseEntityRepository<RentDetail, AppDbContext>, IRentDetailRepository
     {
     }
 }

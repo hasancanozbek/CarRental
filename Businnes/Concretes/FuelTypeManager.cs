@@ -1,10 +1,10 @@
 ﻿
-using Businnes.Abstracts;
+using Business.Abstracts;
 using Core.Utilities.Results;
 using DataAccess.Abstracts;
 using Entities.Concretes;
 
-namespace Businnes.Concretes
+namespace Business.Concretes
 {
     public class FuelTypeManager : IFuelTypeService
     {

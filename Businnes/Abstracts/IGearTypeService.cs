@@ -1,7 +1,7 @@
 ﻿using Core.Utilities.Results;
 using Entities.Concretes;
 
-namespace Businnes.Abstracts
+namespace Business.Abstracts
 {
     public interface IGearTypeService
     {

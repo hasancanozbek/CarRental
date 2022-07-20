@@ -1,14 +1,15 @@
 ﻿
 using AutoMapper;
-using Businnes.Abstracts;
-using Businnes.ValidationRules.FluentValidation;
+using Business.Abstracts;
+using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstracts;
 using Entities.Concretes;
 using Entities.DTOs;
 
-namespace Businnes.Concretes
+namespace Business.Concretes
 {
     public class CarManager : ICarService
     {
@@ -23,8 +24,15 @@ namespace Businnes.Concretes
         [ValidationAspect(typeof(CarValidator))]
         public Result Add(CarAddDto car)
         {
+            Result result = BusinessRules.Run(CheckCarModelExist(car.Model), CheckForbiddenBrand(car.BrandId));
+            if(result != null)
+            {
+                return result;
+            }
+
             var carToAdded = _mapper.Map<Car>(car);
             _carRepository.Add(carToAdded);
+
             return new SuccessResult("Car added to database successfully.");
         }
 
@@ -92,6 +100,27 @@ namespace Businnes.Concretes
         {
             _carRepository.Update(car);
             return new SuccessResult("Car information updated.");
+        }
+
+
+
+        private Result CheckCarModelExist(string model)
+        {
+            var result = _carRepository.Any(c => c.Model == model);
+            if (result)
+            {
+                return new ErrorResult("The car you want to add already exist.");
+            }
+            return new SuccessResult();
+        }
+
+        private Result CheckForbiddenBrand(int brandId)
+        {
+            if (brandId == 1)
+            {
+                return new ErrorResult("The sale of this brand is prohibited.");
+            }
+            return new SuccessResult();
         }
     }
 }
