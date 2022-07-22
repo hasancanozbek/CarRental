@@ -14,8 +14,8 @@ namespace Entities.Concretes
         public int ModelYear { get; set; }
         public string? Description { get; set; }
         public decimal Price { get; set; }
-        public bool Active { get; set; }
-        public bool Deleted { get; set; }
+        public bool? Active { get; set; }
+        public bool? Deleted { get; set; }
 
 
 

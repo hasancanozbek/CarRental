@@ -10,8 +10,6 @@ namespace Business.ValidationRules.FluentValidation
         {
             RuleFor(c => c.Email).EmailAddress().MaximumLength(45).NotEmpty().NotNull();
 
-            RuleFor(c => c.Password).MaximumLength(45).NotEmpty().NotNull();
-
             RuleFor(c => c.Telephone).Length(10).NotEmpty().NotNull();
 
             RuleFor(c => c.FirstName).MaximumLength(45).NotEmpty().NotNull();
