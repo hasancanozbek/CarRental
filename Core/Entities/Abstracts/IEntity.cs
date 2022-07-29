@@ -1,5 +1,5 @@
 ﻿
-namespace Core.Entities
+namespace Core.Entities.Abstracts
 {
     public interface IEntity
     {

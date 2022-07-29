@@ -1,5 +1,5 @@
 ﻿
-using Core.Entities;
+using Core.Entities.Abstracts;
 using System.Text.Json.Serialization;
 
 namespace Entities.Concretes

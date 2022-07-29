@@ -1,7 +1,7 @@
 ﻿
-using Core.Entities;
+using Core.Entities.Abstracts;
 
-namespace Entities.Concretes
+namespace Core.Entities.Concretes
 {
     public class OperationClaim : IEntity
     {

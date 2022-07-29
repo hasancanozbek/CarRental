@@ -1,6 +1,6 @@
 ﻿
-using Core.Entities;
-using Entities.Abstracts;
+using Core.Entities.Abstracts;
+using Core.Entities.Concretes;
 
 namespace Entities.Concretes
 {

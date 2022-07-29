@@ -1,7 +1,5 @@
 ﻿using Business.Abstracts;
-using Entities.Concretes;
 using Entities.DTOs;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers

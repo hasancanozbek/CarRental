@@ -1,5 +1,6 @@
-﻿using Core.Entities;
+﻿
 using System.Linq.Expressions;
+using Core.Entities.Abstracts;
 
 namespace Core.DataAccess
 {

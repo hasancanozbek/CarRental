@@ -1,6 +1,6 @@
 ﻿
-using Core.Entities;
 using System.Text.Json.Serialization;
+using Core.Entities.Abstracts;
 
 namespace Entities.Concretes
 {

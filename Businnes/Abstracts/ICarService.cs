@@ -1,8 +1,6 @@
 ﻿
 using Core.Utilities.Results;
-using Entities.Concretes;
 using Entities.DTOs;
-using System.Linq.Expressions;
 
 namespace Business.Abstracts
 {
