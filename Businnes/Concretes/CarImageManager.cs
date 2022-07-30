@@ -23,7 +23,7 @@ namespace Business.Concretes
 
         public Result Add(IFormFile file, CarImage carImage)
         {
-            var result = BusinessRules.Run( CheckImageLimit(carImage.CarId) );
+            var result = BusinessRules.Run( CheckImageLimit(carImage.CarId), CheckDefaultImageExist(carImage.CarId) );
             if (result != null)
             {
                 return result;
@@ -32,6 +32,18 @@ namespace Business.Concretes
             carImage.UploadDate = DateTime.Now;
             carImageRepository.Add(carImage);
             return new SuccessResult("The photo uploaded successfully.");
+        }
+
+        public Result AddDefaultImage(int carId)
+        {
+            CarImage image = new CarImage()
+            {
+                CarId = carId,
+                ImagePath = "default_car_image",
+                UploadDate = DateTime.Now
+            };
+            carImageRepository.Add(image);
+            return new SuccessResult();
         }
 
         public Result Delete(int id)
@@ -72,11 +84,21 @@ namespace Business.Concretes
         private Result CheckImageLimit(int carId)
         {
             var result = GetAllByCarId(carId);
-            if (result.Data.Count < 0 && result.Data.Count > 5)
+            if (result.Data.Count > 5)
             {
-                return new ErrorResult("There can be a maximum of 5, a minimum of 1 image for each vehicle.");
+                return new ErrorResult("There can be a maximum of 5 image for each car.");
             }
 
+            return new SuccessResult();
+        }
+
+        private Result CheckDefaultImageExist(int carId)
+        {
+            var image = carImageRepository.Get(image => image.ImagePath == "default_car_image");
+            if (image != null)
+            {
+                carImageRepository.Delete(image);
+            }
             return new SuccessResult();
         }
     }

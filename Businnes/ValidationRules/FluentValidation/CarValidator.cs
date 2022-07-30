@@ -22,7 +22,7 @@ namespace Business.ValidationRules.FluentValidation
 
             RuleFor(c => c.Model).NotNull().NotEmpty().MaximumLength(45);
 
-            RuleFor(c => c.Description).MaximumLength(255).NotEmpty();
+            RuleFor(c => c.Description).MaximumLength(255);
         }
     }
 }

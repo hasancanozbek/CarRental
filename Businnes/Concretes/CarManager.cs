@@ -14,25 +14,27 @@ namespace Business.Concretes
     public class CarManager : ICarService
     {
         private readonly ICarRepository _carRepository;
+        private readonly ICarImageService _carImageService;
         private readonly IMapper _mapper;
-        public CarManager(ICarRepository carRepository, IMapper mapper)
+        public CarManager(ICarRepository carRepository, IMapper mapper, ICarImageService carImageService)
         {
             _carRepository = carRepository;
             _mapper = mapper;
+            _carImageService = carImageService;
         }
 
         [ValidationAspect(typeof(CarValidator))]
         public Result Add(CarAddDto car)
         {
-            Result result = BusinessRules.Run(CheckCarModelExist(car.Model), CheckForbiddenBrand(car.BrandId));
-            if(result != null)
+            Result result = BusinessRules.Run(
+                CheckCarModelExist(car.Model), CheckForbiddenBrand(car.BrandId));
+            if (result != null)
             {
                 return result;
             }
-
             var carToAdded = _mapper.Map<Car>(car);
             _carRepository.Add(carToAdded);
-
+            _carImageService.AddDefaultImage(carToAdded.Id);
             return new SuccessResult("Car added to database successfully.");
         }
 
@@ -122,5 +124,6 @@ namespace Business.Concretes
             }
             return new SuccessResult();
         }
+
     }
 }

@@ -8,6 +8,7 @@ namespace Business.Abstracts
     public interface ICarImageService
     {
         Result Add(IFormFile file, CarImage carImage);
+        Result AddDefaultImage(int carId);
         Result Delete(int id);
         Result Update(IFormFile file, CarImage carImage);
 
