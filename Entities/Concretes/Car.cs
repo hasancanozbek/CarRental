@@ -19,11 +19,12 @@ namespace Entities.Concretes
 
 
 
-        public virtual Brand Brand { get; set; }
-        public virtual GearType GearType { get; set; }
-        public virtual FuelType FuelType { get; set; }
-        public virtual Colour Colour { get; set; }
+        public Brand Brand { get; set; }
+        public GearType GearType { get; set; }
+        public FuelType FuelType { get; set; }
+        public Colour Colour { get; set; }
 
-        public virtual List<RentDetail>? RentDetails { get; set; }
+        public List<RentDetail>? RentDetails { get; set; }
+        public List<CarImage>? CarImages { get; set; }
     }
 }

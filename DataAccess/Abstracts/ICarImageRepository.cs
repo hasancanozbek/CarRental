@@ -6,5 +6,6 @@ namespace DataAccess.Abstracts
 {
     public interface ICarImageRepository : IEntityRepository<CarImage>
     {
+        void Delete(int id);
     }
 }

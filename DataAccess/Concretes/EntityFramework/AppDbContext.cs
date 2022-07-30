@@ -14,6 +14,7 @@ namespace DataAccess.Concretes.EntityFramework
         public DbSet<Colour> Colours { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Employee> Employees { get; set; }
+        public DbSet<CarImage> CarImages { get; set; }  
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -32,6 +33,7 @@ namespace DataAccess.Concretes.EntityFramework
             modelBuilder.Entity<GearType>().HasQueryFilter(b => b.IsDeleted == false);
             modelBuilder.Entity<FuelType>().HasQueryFilter(b => b.IsDeleted == false);
             modelBuilder.Entity<Colour>().HasQueryFilter(b => b.IsDeleted == false);
+            modelBuilder.Entity<CarImage>().HasQueryFilter(c => c.Car.Deleted == false && c.Car.Active == true);
 
             base.OnModelCreating(modelBuilder);
         }
