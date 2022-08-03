@@ -13,7 +13,7 @@ namespace DataAccess.Concretes.EntityFramework
             using (AppDbContext context = new())
             {
                 var customerToDeleted = context.Customers.SingleOrDefault(c => c.Id == id);
-                context.Remove(customerToDeleted);
+                customerToDeleted.Status = false;
                 context.SaveChanges();
             }
         }

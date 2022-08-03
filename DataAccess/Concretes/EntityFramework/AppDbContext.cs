@@ -1,4 +1,5 @@
-﻿using Entities.Concretes;
+﻿using Core.Entities.Concretes;
+using Entities.Concretes;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -14,7 +15,10 @@ namespace DataAccess.Concretes.EntityFramework
         public DbSet<Colour> Colours { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Employee> Employees { get; set; }
-        public DbSet<CarImage> CarImages { get; set; }  
+        public DbSet<CarImage> CarImages { get; set; }
+        public DbSet<OperationClaim> OperationClaims { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<UserOperationClaim> UserOperationClaims { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -25,6 +29,10 @@ namespace DataAccess.Concretes.EntityFramework
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+            modelBuilder.Entity<User>().ToTable("Users");
+            modelBuilder.Entity<Customer>().ToTable("Customers");
+            modelBuilder.Entity<Employee>().ToTable("Employees");
 
             modelBuilder.Entity<Car>().HasQueryFilter(c => c.Deleted == false && c.Active == true);
             modelBuilder.Entity<RentDetail>().HasQueryFilter(c => c.Car.Deleted == false && c.Car.Active == true);

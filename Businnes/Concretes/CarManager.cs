@@ -1,6 +1,7 @@
 ﻿
 using AutoMapper;
 using Business.Abstracts;
+using Business.BusinessAspects.Autofac;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Business;
@@ -24,6 +25,7 @@ namespace Business.Concretes
         }
 
         [ValidationAspect(typeof(CarValidator))]
+        [SecuredOperation("admin")]
         public Result Add(CarAddDto car)
         {
             Result result = BusinessRules.Run(
