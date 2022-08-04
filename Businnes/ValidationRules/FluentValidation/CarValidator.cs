@@ -4,7 +4,7 @@ using FluentValidation;
 
 namespace Business.ValidationRules.FluentValidation
 {
-    public class CarValidator : AbstractValidator<CarAddDto>
+    public class CarValidator : AbstractValidator<CarFeatureDto>
     {
         public CarValidator()
         {

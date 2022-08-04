@@ -16,7 +16,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("Add")]
-        public IActionResult Add(CarAddDto car)
+        public IActionResult Add(CarFeatureDto car)
         {
             var result = _carService.Add(car);
             if (result.Status)
@@ -38,7 +38,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPut("Update")]
-        public IActionResult Update(CarUpdateDto car)
+        public IActionResult Update(CarFeatureDto car)
         {
             var result = _carService.Update(car);
             if (result.Status)

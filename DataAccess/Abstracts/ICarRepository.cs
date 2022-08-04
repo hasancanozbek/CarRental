@@ -8,7 +8,7 @@ namespace DataAccess.Abstracts
 {
     public interface ICarRepository : IEntityRepository<Car>
     {
-        public void Update(CarUpdateDto car);
+        public void Update(CarFeatureDto car);
         public void Delete(int id);
         public List<CarDto> GetAllCars(Expression<Func<CarDto, bool>> filter = null);
         public CarDto GetCar(Expression<Func<CarDto, bool>> filter);

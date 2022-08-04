@@ -26,7 +26,7 @@ namespace Business.Concretes
 
         [ValidationAspect(typeof(CarValidator))]
         [SecuredOperation("admin")]
-        public Result Add(CarAddDto car)
+        public Result Add(CarFeatureDto car)
         {
             Result result = BusinessRules.Run(
                 CheckCarModelExist(car.Model), CheckForbiddenBrand(car.BrandId));
@@ -100,7 +100,7 @@ namespace Business.Concretes
             return new SuccessDataResult<List<CarFeatureDto>>(carDtos, "Cars are listed according to the desired price range.");
         }
 
-        public Result Update(CarUpdateDto car)
+        public Result Update(CarFeatureDto car)
         {
             _carRepository.Update(car);
             return new SuccessResult("Car information updated.");

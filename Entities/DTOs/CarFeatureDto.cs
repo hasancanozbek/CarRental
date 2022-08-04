@@ -12,6 +12,7 @@ namespace Entities.DTOs
         public int ColourId { get; set; }
         public string Model { get; set; }
         public int ModelYear { get; set; }
+        public string? Description { get; set; }
         public decimal Price { get; set; }
     }
 }

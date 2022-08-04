@@ -9,11 +9,8 @@ namespace Business.Mapping
     {
         public MapProfile()
         {
-            CreateMap<Car, CarAddDto>().ReverseMap();
-            CreateMap<Car, CarUpdateDto>().ReverseMap();
             CreateMap<Car, CarDto>().ReverseMap();
             CreateMap<Car, CarFeatureDto>().ReverseMap();
-
 
             CreateMap<Customer, CustomerDto>().ReverseMap();
         }

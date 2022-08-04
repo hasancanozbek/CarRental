@@ -67,7 +67,7 @@ namespace DataAccess.Concretes.EntityFramework
             }
         }
 
-        public void Update(CarUpdateDto car)
+        public void Update(CarFeatureDto car)
         {
             using (AppDbContext context = new())
             {
@@ -79,7 +79,6 @@ namespace DataAccess.Concretes.EntityFramework
                 carToUpdated.ModelYear = car.ModelYear;
                 carToUpdated.Description = car.Description;
                 carToUpdated.Price = car.Price;
-                carToUpdated.Active = car.Active;
 
                 context.SaveChanges();
             }

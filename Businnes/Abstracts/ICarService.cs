@@ -6,9 +6,9 @@ namespace Business.Abstracts
 {
     public interface ICarService
     {
-        Result Add(CarAddDto car);
+        Result Add(CarFeatureDto car);
         Result Delete(int id);
-        Result Update(CarUpdateDto car);
+        Result Update(CarFeatureDto car);
         DataResult<CarDto> GetById(int id);
         DataResult<List<CarDto>> GetAll();
         DataResult<List<CarFeatureDto>> GetByPrice(int min, int max);
