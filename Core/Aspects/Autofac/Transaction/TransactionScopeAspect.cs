@@ -3,7 +3,7 @@ using Castle.DynamicProxy;
 using Core.Utilities.Interceptors;
 using System.Transactions;
 
-namespace Core.CrossCuttingConcerns.Transaction
+namespace Core.Aspects.Autofac.Transaction
 {
     public class TransactionScopeAspect : MethodInterception
     {
