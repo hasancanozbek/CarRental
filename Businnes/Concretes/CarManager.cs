@@ -25,8 +25,9 @@ namespace Business.Concretes
             _carImageService = carImageService;
         }
 
-        [ValidationAspect(typeof(CarValidator))]
         [SecuredOperation("admin")]
+        [ValidationAspect(typeof(CarValidator))]
+        [CacheRemoveAspect("ICarService.Get")]
         public Result Add(CarFeatureDto car)
         {
             Result result = BusinessRules.Run(
@@ -41,6 +42,7 @@ namespace Business.Concretes
             return new SuccessResult("Car added to database successfully.");
         }
 
+        [CacheRemoveAspect("ICarService.Get")]
         public Result Delete(int id)
         {
             _carRepository.Delete(id);
@@ -109,6 +111,7 @@ namespace Business.Concretes
             return new SuccessDataResult<List<CarFeatureDto>>(carDtos, "Cars are listed according to the desired price range.");
         }
 
+        [CacheRemoveAspect("ICarService.Get")]
         public Result Update(CarFeatureDto car)
         {
             _carRepository.Update(car);
@@ -129,7 +132,7 @@ namespace Business.Concretes
 
         private Result CheckForbiddenBrand(int brandId)
         {
-            if (brandId == 1)
+            if (brandId == 21)
             {
                 return new ErrorResult("The sale of this brand is prohibited.");
             }
