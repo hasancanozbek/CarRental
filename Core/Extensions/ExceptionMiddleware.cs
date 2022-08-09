@@ -7,7 +7,7 @@ namespace Core.Extensions
 {
     public class ExceptionMiddleware
     {
-        private RequestDelegate _next;
+        private readonly RequestDelegate _next;
 
         public ExceptionMiddleware(RequestDelegate next)
         {
@@ -26,32 +26,32 @@ namespace Core.Extensions
             }
         }
 
-        private Task HandleExceptionAsync(HttpContext httpContext, Exception e)
+        private Task HandleExceptionAsync(HttpContext httpContext, Exception exception)
         {
-            httpContext.Response.ContentType = "application/json";
-            httpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+            var response = httpContext.Response;
+            response.ContentType = "application/json";
 
-            string message = "Internal Server Error";
-            IEnumerable<ValidationFailure> errors;
-            if (e.GetType() == typeof(ValidationException))
+            switch (exception)
             {
-                message = e.Message;
-                errors = ((ValidationException)e).Errors;
-                httpContext.Response.StatusCode = 400;
+                case ValidationException:
+                    IEnumerable<ValidationFailure> errors;
+                    errors = ((ValidationException)exception).Errors;
 
-                return httpContext.Response.WriteAsync(new ValidationErrorDetails
-                {
-                    StatusCode = 400,
-                    Message = message,
-                    Errors = errors
-                }.ToString());
+                    return httpContext.Response.WriteAsync(new ValidationErrorDetails
+                    {
+                        StatusCode = response.StatusCode = (int)HttpStatusCode.InternalServerError,
+                        Errors = errors,
+                        Message = exception.Message
+                    }.ToString());
+
+
+                default:
+                    return httpContext.Response.WriteAsync(new ErrorDetails
+                    {
+                        StatusCode = response.StatusCode = (int)HttpStatusCode.InternalServerError,
+                        Message = exception.Message
+                    }.ToString());
             }
-
-            return httpContext.Response.WriteAsync(new ErrorDetails
-            {
-                StatusCode = httpContext.Response.StatusCode,
-                Message = message
-            }.ToString());
         }
     }
 }

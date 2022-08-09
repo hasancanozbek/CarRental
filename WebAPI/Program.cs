@@ -86,11 +86,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-//
+//Global Exception Handler
 app.ConfigureCustomExceptionMiddleware();
 
+//Authentication Support
 app.UseAuthentication();
-//
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

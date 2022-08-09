@@ -70,6 +70,7 @@ namespace Business.Concretes
             if (userToCheck == null)
             {
                 return new ErrorDataResult<User>("User not found.");
+                //throw new Exception("User not found.");
             }
 
             if (!HashingHelper.VerifyPasswordHash(userForLoginDto.Password, userToCheck.PasswordHash, userToCheck.PasswordSalt))
