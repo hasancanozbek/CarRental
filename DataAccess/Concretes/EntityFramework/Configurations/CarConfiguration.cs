@@ -8,9 +8,10 @@ namespace DataAccess.Concretes.EntityFramework.Configurations
     {
         public void Configure(EntityTypeBuilder<Car> builder)
         {
-            builder.Property(x => x.Deleted).HasDefaultValue(false);
-            builder.Property(x => x.Active).HasDefaultValue(true);
-            builder.Property(x => x.Price).HasPrecision(9,2);
+            builder.Property(c => c.Deleted).HasDefaultValue(false);
+            builder.Property(c => c.Active).HasDefaultValue(true);
+            builder.Property(c => c.Price).HasPrecision(9,2);
+            //builder.HasIndex(c => c.Model).IsUnique();
         }
     }
 }

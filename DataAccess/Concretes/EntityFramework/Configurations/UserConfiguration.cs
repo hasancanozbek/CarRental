@@ -10,6 +10,8 @@ namespace DataAccess.Concretes.EntityFramework.Configurations
         public void Configure(EntityTypeBuilder<User> builder)
         {
             builder.Property(u => u.Status).HasDefaultValue(true);
+            builder.HasIndex(u => u.Email).IsUnique();
+            builder.HasIndex(u => u.Telephone).IsUnique();
         }
     }
 }

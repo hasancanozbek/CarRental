@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220802161508_jwt_implementation")]
-    partial class jwt_implementation
+    [Migration("20220809121115_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -44,7 +44,7 @@ namespace DataAccess.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -63,13 +63,21 @@ namespace DataAccess.Migrations
                         .HasColumnType("longblob");
 
                     b.Property<bool>("Status")
-                        .HasColumnType("tinyint(1)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("tinyint(1)")
+                        .HasDefaultValue(true);
 
                     b.Property<string>("Telephone")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(255)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.HasIndex("Telephone")
+                        .IsUnique();
 
                     b.ToTable("Users", (string)null);
                 });
@@ -99,7 +107,7 @@ namespace DataAccess.Migrations
 
                     b.Property<string>("BrandName")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
@@ -107,6 +115,9 @@ namespace DataAccess.Migrations
                         .HasDefaultValue(false);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BrandName")
+                        .IsUnique();
 
                     b.ToTable("Brands");
                 });
@@ -150,7 +161,8 @@ namespace DataAccess.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(65,30)");
+                        .HasPrecision(9, 2)
+                        .HasColumnType("decimal(9,2)");
 
                     b.HasKey("Id");
 
@@ -196,7 +208,7 @@ namespace DataAccess.Migrations
 
                     b.Property<string>("ColourName")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
@@ -204,6 +216,9 @@ namespace DataAccess.Migrations
                         .HasDefaultValue(false);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ColourName")
+                        .IsUnique();
 
                     b.ToTable("Colours");
                 });
@@ -216,7 +231,7 @@ namespace DataAccess.Migrations
 
                     b.Property<string>("Fuel")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
@@ -224,6 +239,9 @@ namespace DataAccess.Migrations
                         .HasDefaultValue(false);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Fuel")
+                        .IsUnique();
 
                     b.ToTable("FuelTypes");
                 });
@@ -236,7 +254,7 @@ namespace DataAccess.Migrations
 
                     b.Property<string>("Gear")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
@@ -244,6 +262,9 @@ namespace DataAccess.Migrations
                         .HasDefaultValue(false);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Gear")
+                        .IsUnique();
 
                     b.ToTable("GearTypes");
                 });

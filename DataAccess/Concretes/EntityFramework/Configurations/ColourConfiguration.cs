@@ -9,6 +9,7 @@ namespace DataAccess.Concretes.EntityFramework.Configurations
         public void Configure(EntityTypeBuilder<Colour> builder)
         {
             builder.Property(c => c.IsDeleted).HasDefaultValue(false);
+            builder.HasIndex(c => c.ColourName).IsUnique();
         }
     }
 }

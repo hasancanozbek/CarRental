@@ -9,6 +9,7 @@ namespace DataAccess.Concretes.EntityFramework.Configurations
         public void Configure(EntityTypeBuilder<Brand> builder)
         {
             builder.Property(b => b.IsDeleted).HasDefaultValue(false);
+            builder.HasIndex(b => b.BrandName).IsUnique();
         }
     }
 }

@@ -10,6 +10,7 @@ namespace DataAccess.Concretes.EntityFramework.Configurations
         public void Configure(EntityTypeBuilder<GearType> builder)
         {
             builder.Property(g => g.IsDeleted).HasDefaultValue(false);
+            builder.HasIndex(g => g.Gear).IsUnique();
         }
     }
 }

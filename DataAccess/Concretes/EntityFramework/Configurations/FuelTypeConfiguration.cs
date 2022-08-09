@@ -10,6 +10,7 @@ namespace DataAccess.Concretes.EntityFramework.Configurations
         public void Configure(EntityTypeBuilder<FuelType> builder)
         {
             builder.Property(f => f.IsDeleted).HasDefaultValue(false);
+            builder.HasIndex(f => f.Fuel).IsUnique();
         }
     }
 }
