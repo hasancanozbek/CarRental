@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using Core.CustomExceptions;
+using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
 using System.Net;
@@ -43,7 +44,19 @@ namespace Core.Extensions
                         Errors = errors,
                         Message = exception.Message
                     }.ToString());
+                case AccessDeniedException:
+                    return httpContext.Response.WriteAsync(new ErrorDetails
+                    {
+                        StatusCode = response.StatusCode = (int)HttpStatusCode.Forbidden,
+                        Message = exception.Message
+                    }.ToString());
 
+                case UnauthorizedException:
+                    return httpContext.Response.WriteAsync(new ErrorDetails
+                    {
+                        StatusCode = response.StatusCode = (int)HttpStatusCode.Unauthorized,
+                        Message = exception.Message
+                    }.ToString());
 
                 default:
                     return httpContext.Response.WriteAsync(new ErrorDetails

@@ -1,5 +1,6 @@
 ﻿
 using Castle.DynamicProxy;
+using Core.CustomExceptions;
 using Core.Extensions;
 using Core.Utilities.Interceptors;
 using Core.Utilities.IoC;
@@ -30,7 +31,7 @@ namespace Business.BusinessAspects.Autofac
                     return;
                 }
             }
-            throw new Exception("Authorization denied.");
+            throw new AccessDeniedException();
         }
     }
 }
