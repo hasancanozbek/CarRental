@@ -9,10 +9,12 @@ namespace Core.CrossCuttingConcerns.Caching.InMemory
     public class InMemoryCacheManager : ICacheService
     {
         private readonly IMemoryCache memoryCache;
+
         public InMemoryCacheManager()
         {
             memoryCache = ServiceTool.ServiceProvider.GetService<IMemoryCache>();
         }
+
         public void Add(string key, object value, int duration)
         {
             memoryCache.Set(key, value, TimeSpan.FromMinutes(duration));

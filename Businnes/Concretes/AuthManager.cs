@@ -1,5 +1,6 @@
 ﻿
 using Business.Abstracts;
+using Core.CustomExceptions;
 using Core.Entities.Concretes;
 using Core.Utilities.Results;
 using Core.Utilities.Security.Hashing;
@@ -69,13 +70,14 @@ namespace Business.Concretes
             var userToCheck = userService.GetByMail(userForLoginDto.Email);
             if (userToCheck == null)
             {
-                return new ErrorDataResult<User>("User not found.");
-                //throw new Exception("User not found.");
+                //return new ErrorDataResult<User>("User not found.");
+                throw new UnauthorizedException("User not found.");
             }
 
             if (!HashingHelper.VerifyPasswordHash(userForLoginDto.Password, userToCheck.PasswordHash, userToCheck.PasswordSalt))
             {
-                return new ErrorDataResult<User>("Email or password incorrect.");
+                //return new ErrorDataResult<User>("Email or password incorrect.");
+                throw new UnauthorizedException("Email or password incorrect.");
             }
 
             return new SuccessDataResult<User>(userToCheck, "Login was successfully.");
@@ -85,7 +87,8 @@ namespace Business.Concretes
         {
             if (userService.GetByMail(email) != null)
             {
-                return new ErrorResult("User already exist.");
+                //return new ErrorResult("User already exist.");
+                throw new UnauthorizedException("User already exist.");
             }
             return new SuccessResult();
         }
