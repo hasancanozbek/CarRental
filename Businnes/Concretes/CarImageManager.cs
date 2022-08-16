@@ -94,7 +94,7 @@ namespace Business.Concretes
 
         private Result CheckDefaultImageExist(int carId)
         {
-            var image = carImageRepository.Get(image => image.ImagePath == "default_car_image");
+            var image = carImageRepository.Get(image => image.ImagePath == "default_car_image" && image.CarId == carId);
             if (image != null)
             {
                 carImageRepository.Delete(image);
