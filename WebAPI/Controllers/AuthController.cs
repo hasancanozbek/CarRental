@@ -48,11 +48,7 @@ namespace WebAPI.Controllers
             if (registerResult.Status)
             {
                 var tokenResult = _authService.CreateAccessToken(registerResult.Data);
-                if (tokenResult.Status)
-                {
-                    return Ok(tokenResult.Data);
-                }
-                return BadRequest(tokenResult.Message);
+                return Ok(tokenResult.Data);
             }
             return BadRequest(registerResult.Message);
         }
