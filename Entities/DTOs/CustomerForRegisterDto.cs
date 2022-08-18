@@ -10,6 +10,7 @@ namespace Entities.DTOs
         public string LastName { get; set; }
         public string Telephone { get; set; }
         public string NationalId { get; set; }
+        public int YearOfBirth { get; set; }
         public string Address { get; set; }
     }
 }

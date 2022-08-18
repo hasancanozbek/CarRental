@@ -17,9 +17,9 @@ namespace WebAPI.Controllers
 
 
         [HttpPost("Add")]
-        public IActionResult Add(Customer car)
+        public IActionResult Add(Customer customer)
         {
-            var result = _customerService.Add(car);
+            var result = _customerService.Add(customer);
             if (result.Status)
             {
                 return Ok(result);

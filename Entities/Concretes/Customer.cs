@@ -9,6 +9,7 @@ namespace Entities.Concretes
     {
         public string NationalId { get; set; }
         public string Address { get; set; }
+        public int YearOfBirth { get; set; }
 
 
         [JsonIgnore]

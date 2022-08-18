@@ -2,6 +2,7 @@
 using AutoMapper;
 using Business.Abstracts;
 using Business.ValidationRules.FluentValidation;
+using Core.Adapters.PersonValidation;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Business;
 using Core.Utilities.Results;
@@ -16,17 +17,19 @@ namespace Business.Concretes
         private readonly ICustomerRepository _customerRepository;
         private readonly IRentDetailService _rentDetailService;
         private readonly IMapper _mapper;
-        public CustomerManager(ICustomerRepository customerRepository, IMapper mapper, IRentDetailService rentDetailService)
-        {
-            this._customerRepository = customerRepository;
+        private readonly IPersonValidationService personValidationService;
+        public CustomerManager(ICustomerRepository customerRepository, IMapper mapper, IRentDetailService rentDetailService, IPersonValidationService personValidationService)
+        { 
+            _customerRepository = customerRepository;
             _mapper = mapper;
             _rentDetailService = rentDetailService;
+            this.personValidationService = personValidationService;
         }
 
         [ValidationAspect(typeof(CustomerValidator))]
         public Result Add(Customer customer)
         {
-            var result = BusinessRules.Run(CheckCustomerEmailExist(customer.Email));
+            var result = BusinessRules.Run(CheckCustomerRealPerson(customer),CheckCustomerEmailExist(customer.Email));
             if (result != null)
             {
                 return result;
@@ -104,12 +107,22 @@ namespace Business.Concretes
 
         private Result CheckCustomerHaveActiveRental(int customerId)
         {
-            var result = _rentDetailService.GetAllRentDetails(r => r.CustomerId == customerId);
-            if(result.Data == null)
+            var result = _rentDetailService.GetAllRentDetails(r => r.CustomerId == customerId && r.ReturnDate == null);
+            if(result.Data != null)
             {
                 return new ErrorResult("The car was previously rented but not delivered. Please return the existing car before renting a new one.");
             }
             return new SuccessResult();
+        }
+
+        private Result CheckCustomerRealPerson(Customer customer)
+        {
+            var isReal = personValidationService.IsRealPerson(customer);
+            if (isReal)
+            {
+                return new SuccessResult();
+            }
+            return new ErrorResult("Person failed to pass mernis verification.");
         }
     }
 }

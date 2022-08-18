@@ -44,13 +44,17 @@ namespace WebAPI.Controllers
             }
 
             var registerResult = _authService.RegisterForCustomer(customerForRegisterDto);
-            var tokenResult = _authService.CreateAccessToken(registerResult.Data);
-            if (tokenResult.Status)
-            {
-                return Ok(tokenResult.Data);
-            }
 
-            return BadRequest(tokenResult.Message);
+            if (registerResult.Status)
+            {
+                var tokenResult = _authService.CreateAccessToken(registerResult.Data);
+                if (tokenResult.Status)
+                {
+                    return Ok(tokenResult.Data);
+                }
+                return BadRequest(tokenResult.Message);
+            }
+            return BadRequest(registerResult.Message);
         }
 
         [HttpPost("RegisterForEmployee")]

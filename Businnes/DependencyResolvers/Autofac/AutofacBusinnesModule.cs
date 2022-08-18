@@ -2,8 +2,10 @@
 using Autofac;
 using Autofac.Extras.DynamicProxy;
 using Business.Abstracts;
+using Business.Adapters.PersonValidation.MernisValidation;
 using Business.Concretes;
 using Castle.DynamicProxy;
+using Core.Adapters.PersonValidation;
 using Core.Utilities.Helpers.FileHelper;
 using Core.Utilities.Interceptors;
 using Core.Utilities.Security.Jwt;
@@ -50,6 +52,8 @@ namespace Business.DependencyResolvers.Autofac
 
             builder.RegisterType<AuthManager>().As<IAuthService>();
             builder.RegisterType<JwtHelper>().As<ITokenHelper>();
+
+            builder.RegisterType<MernisAdapter>().As<IPersonValidationService>().SingleInstance();
 
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 

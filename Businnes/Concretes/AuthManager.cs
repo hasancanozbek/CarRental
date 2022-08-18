@@ -37,13 +37,18 @@ namespace Business.Concretes
                 LastName = customerForRegisterDto.LastName,
                 Telephone = customerForRegisterDto.Telephone,
                 NationalId = customerForRegisterDto.NationalId,
+                YearOfBirth = customerForRegisterDto.YearOfBirth,
                 Address = customerForRegisterDto.Address,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
                 Status = true
             };
-            customerService.Add(customer);
-            return new SuccessDataResult<Customer>(customer, "Customer registered successfully.");
+            var result = customerService.Add(customer);
+            if (result.Status)
+            {
+                return new SuccessDataResult<Customer>(customer, "Customer registered successfully.");
+            }
+            return new ErrorDataResult<Customer>(result.Message);
         }
 
         public DataResult<Employee> RegisterForEmployee(EmployeeForRegisterDto employeeeForRegisterDto)
