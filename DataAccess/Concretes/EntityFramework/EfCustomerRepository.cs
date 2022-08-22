@@ -18,13 +18,12 @@ namespace DataAccess.Concretes.EntityFramework
             }
         }
 
-        public void RentCar(int customerId, int carId, string originAddress, string returnAddress)
+        public RentDetail RentCar(int customerId, int carId, string originAddress, string returnAddress)
         {
             using (AppDbContext context = new())
             {
-                var customer = context.Customers.SingleOrDefault(customer => customer.Id == customerId);
                 var car = context.Cars.SingleOrDefault(car => car.Id == carId);
-                context.RentDetails.Add(new RentDetail()
+                var rentDetailsData = context.RentDetails.Add(new RentDetail()
                 {
                     CustomerId = customerId,
                     CarId = carId,
@@ -37,6 +36,7 @@ namespace DataAccess.Concretes.EntityFramework
                 car.Active = false;
 
                 context.SaveChanges();
+                return rentDetailsData.Entity;
             }
         }
 
@@ -45,7 +45,7 @@ namespace DataAccess.Concretes.EntityFramework
             using (AppDbContext context = new())
             {
                 var car = context.Cars.IgnoreQueryFilters().SingleOrDefault(car => car.Id == carId);
-                var rentDetail = context.RentDetails.SingleOrDefault(rentDetail => rentDetail.CarId == carId);
+                var rentDetail = context.RentDetails.SingleOrDefault(rentDetail => rentDetail.CarId == carId && rentDetail.ReturnDate == null);
                 rentDetail.ReturnDate = DateTime.Now;
                 car.Active = true;
 

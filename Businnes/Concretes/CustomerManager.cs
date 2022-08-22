@@ -53,7 +53,7 @@ namespace Business.Concretes
 
         public DataResult<List<RentDetail>> GetAllRentDetailsByCustomerId(int customerId)
         {
-            var rentDetails = _rentDetailService.GetAllRentDetails(r => r.CustomerId == customerId);
+            var rentDetails = _rentDetailService.GetAllRentDetailsByCustomerId(customerId);
             return new SuccessDataResult<List<RentDetail>>(rentDetails.Data, "Rent details specified by customer id is listed.");
         }
 
@@ -66,7 +66,7 @@ namespace Business.Concretes
 
         public DataResult<RentDetail> GetRentDetailById(int id)
         {
-            var rentDetail = _rentDetailService.GetRentDetail(r => r.Id == id);
+            var rentDetail = _rentDetailService.GetRentDetailById(id);
             return new SuccessDataResult<RentDetail>(rentDetail.Data, "Rent detail specified by id is listed.");
         }
 
@@ -77,14 +77,14 @@ namespace Business.Concretes
             {
                 return result;
             }
-            _customerRepository.RentCar(customerId, carId, originAddress, returnAddress);
+            var rentDetail = _customerRepository.RentCar(customerId, carId, originAddress, returnAddress);
             return new SuccessResult("Car rented successfully.");
         }
 
         public Result ReturnCar(int carId)
         {
             _customerRepository.ReturnCar(carId);
-            return new SuccessResult("Car returned successfully");
+            return new SuccessResult("Car returned successfully.");
         }
 
         public Result Update(Customer customer)
@@ -107,7 +107,7 @@ namespace Business.Concretes
 
         private Result CheckCustomerHaveActiveRental(int customerId)
         {
-            var result = _rentDetailService.GetAllRentDetails(r => r.CustomerId == customerId && r.ReturnDate == null);
+            var result = _rentDetailService.GetRentDetailByCustomerIdWithNullReturnDate(customerId);
             if(result.Data != null)
             {
                 return new ErrorResult("The car was previously rented but not delivered. Please return the existing car before renting a new one.");

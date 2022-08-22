@@ -18,6 +18,7 @@ namespace Entities.Concretes
 
         [JsonIgnore]
         public Customer Customer { get; set; }
+
         [JsonIgnore]
         public Car Car { get; set; }
     }

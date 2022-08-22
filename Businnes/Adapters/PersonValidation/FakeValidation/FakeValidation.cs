@@ -1,8 +1,8 @@
 ﻿
-using Core.Entities.Concretes;
+using Core.Adapters.PersonValidation;
 using Entities.Concretes;
 
-namespace Core.Adapters.PersonValidation
+namespace Business.Adapters.PersonValidation.FakeValidation
 {
     public class FakeValidation : IPersonValidationService
     {

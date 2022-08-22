@@ -14,16 +14,28 @@ namespace Business
             this.rentDetailRepository = rentDetailRepository;
         }
 
-        public DataResult<List<RentDetail>> GetAllRentDetails(Expression<Func<RentDetail, bool>> filter = null)
+        public DataResult<List<RentDetail>> GetAllRentDetails()
         {
-            var rentDetails = rentDetailRepository.GetAll(filter);
+            var rentDetails = rentDetailRepository.GetAll();
             return new SuccessDataResult<List<RentDetail>>(rentDetails);
         }
 
-        public DataResult<RentDetail> GetRentDetail(Expression<Func<RentDetail, bool>> filter)
+        public DataResult<RentDetail> GetRentDetailById(int id)
         {
-            var rentDetail = rentDetailRepository.Get(filter);
+            var rentDetail = rentDetailRepository.Get(r => r.Id == id);
             return new SuccessDataResult<RentDetail>(rentDetail);
+        }
+
+        public DataResult<RentDetail> GetRentDetailByCustomerIdWithNullReturnDate(int customerId)
+        {
+            var rentDetail = rentDetailRepository.Get(r => r.CustomerId == customerId && r.ReturnDate == null);
+            return new SuccessDataResult<RentDetail>(rentDetail);
+        }
+
+        public DataResult<List<RentDetail>> GetAllRentDetailsByCustomerId(int customerId)
+        {
+            var rentDetails = rentDetailRepository.GetAll(r => r.CustomerId == customerId);
+            return new SuccessDataResult<List<RentDetail>>(rentDetails);
         }
     }
 }

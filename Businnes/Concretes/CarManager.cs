@@ -31,7 +31,7 @@ namespace Business.Concretes
         public Result Add(CarFeatureDto car)
         {
             Result result = BusinessRules.Run(
-                CheckCarModelExist(car.Model), CheckForbiddenBrand(car.BrandId));
+                CheckCarModelExist(car.Model));
             if (result != null)
             {
                 return result;
@@ -126,15 +126,6 @@ namespace Business.Concretes
             if (result)
             {
                 return new ErrorResult("The car you want to add already exist.");
-            }
-            return new SuccessResult();
-        }
-
-        private Result CheckForbiddenBrand(int brandId)
-        {
-            if (brandId == 21)
-            {
-                return new ErrorResult("The sale of this brand is prohibited.");
             }
             return new SuccessResult();
         }
