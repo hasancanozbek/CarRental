@@ -1,8 +1,9 @@
 ﻿using Business.Abstracts;
+using Core.Utilities.MessageBrokers.RabbitMQ;
 using Core.Utilities.Results;
 using DataAccess.Abstracts;
 using Entities.Concretes;
-using System.Linq.Expressions;
+using Entities.DTOs;
 
 namespace Business
 {
@@ -14,28 +15,28 @@ namespace Business
             this.rentDetailRepository = rentDetailRepository;
         }
 
-        public DataResult<List<RentDetail>> GetAllRentDetails()
+        public DataResult<List<RentInformationDto>> GetAllRentDetails()
         {
-            var rentDetails = rentDetailRepository.GetAll();
-            return new SuccessDataResult<List<RentDetail>>(rentDetails);
+            var rentDetails = rentDetailRepository.GetAllRentDetails();
+            return new SuccessDataResult<List<RentInformationDto>>(rentDetails);
         }
 
-        public DataResult<RentDetail> GetRentDetailById(int id)
+        public DataResult<RentInformationDto> GetRentDetailById(int id)
         {
-            var rentDetail = rentDetailRepository.Get(r => r.Id == id);
-            return new SuccessDataResult<RentDetail>(rentDetail);
-        }
-
-        public DataResult<RentDetail> GetRentDetailByCustomerIdWithNullReturnDate(int customerId)
-        {
-            var rentDetail = rentDetailRepository.Get(r => r.CustomerId == customerId && r.ReturnDate == null);
-            return new SuccessDataResult<RentDetail>(rentDetail);
+            var rentDetail = rentDetailRepository.GetRentDetail(r => r.Id == id);
+            return new SuccessDataResult<RentInformationDto>(rentDetail);
         }
 
         public DataResult<List<RentDetail>> GetAllRentDetailsByCustomerId(int customerId)
         {
             var rentDetails = rentDetailRepository.GetAll(r => r.CustomerId == customerId);
             return new SuccessDataResult<List<RentDetail>>(rentDetails);
+        }
+
+        public DataResult<RentDetail> GetRentDetailByCustomerId(int customerId)
+        {
+            var rentDetail = rentDetailRepository.Get(r => r.CustomerId == customerId);
+            return new SuccessDataResult<RentDetail>(rentDetail);
         }
     }
 }

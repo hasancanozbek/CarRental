@@ -8,6 +8,8 @@ using Castle.DynamicProxy;
 using Core.Adapters.PersonValidation;
 using Core.Utilities.Helpers.FileHelper;
 using Core.Utilities.Interceptors;
+using Core.Utilities.MessageBrokers;
+using Core.Utilities.MessageBrokers.RabbitMQ;
 using Core.Utilities.Security.Jwt;
 using DataAccess.Abstracts;
 using DataAccess.Concretes.EntityFramework;
@@ -54,6 +56,8 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<JwtHelper>().As<ITokenHelper>();
 
             builder.RegisterType<MernisAdapter>().As<IPersonValidationService>().SingleInstance();
+
+            builder.RegisterType<RabbitMqPublisher>().As<IMessageBrokerPublisherService>().SingleInstance();
 
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 

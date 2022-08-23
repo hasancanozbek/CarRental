@@ -35,7 +35,6 @@ namespace DataAccess.Concretes.EntityFramework
             modelBuilder.Entity<Employee>().ToTable("Employees");
 
             modelBuilder.Entity<Car>().HasQueryFilter(c => c.Deleted == false && c.Active == true);
-            modelBuilder.Entity<RentDetail>().HasQueryFilter(c => c.Car.Deleted == false && c.Car.Active == true);
 
             modelBuilder.Entity<Brand>().HasQueryFilter(b => b.IsDeleted == false);
             modelBuilder.Entity<GearType>().HasQueryFilter(b => b.IsDeleted == false);

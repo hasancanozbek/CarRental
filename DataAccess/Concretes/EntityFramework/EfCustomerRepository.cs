@@ -2,6 +2,7 @@
 using Core.DataAccess.EntityFramework;
 using DataAccess.Abstracts;
 using Entities.Concretes;
+using Entities.DTOs;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Concretes.EntityFramework
@@ -18,12 +19,14 @@ namespace DataAccess.Concretes.EntityFramework
             }
         }
 
-        public RentDetail RentCar(int customerId, int carId, string originAddress, string returnAddress)
+        public RentInformationDto RentCar(int customerId, int carId, string originAddress, string returnAddress)
         {
             using (AppDbContext context = new())
             {
                 var car = context.Cars.SingleOrDefault(car => car.Id == carId);
-                var rentDetailsData = context.RentDetails.Add(new RentDetail()
+                var brand = context.Brands.SingleOrDefault(b => b.Id == car.BrandId);
+                var customer = context.Customers.SingleOrDefault(c => c.Id == customerId);
+                var rentDetailData = context.RentDetails.Add(new RentDetail()
                 {
                     CustomerId = customerId,
                     CarId = carId,
@@ -33,10 +36,20 @@ namespace DataAccess.Concretes.EntityFramework
                     OriginAddress = originAddress,
                     ReturnAddress = returnAddress
                 });
-                car.Active = false;
+                RentInformationDto rentInformation = new RentInformationDto
+                {
+                    Id = rentDetailData.Entity.Id,
+                    Car = $"{brand.BrandName} {car.Model}",
+                    Price = rentDetailData.Entity.Price,
+                    CustomerEmail = customer.Email,
+                    CustomerFullName = $"{customer.FirstName} {customer.LastName}",
+                    RentalDate = rentDetailData.Entity.RentalDate
+                };
 
+                car.Active = false;
+     
                 context.SaveChanges();
-                return rentDetailsData.Entity;
+                return rentInformation;
             }
         }
 

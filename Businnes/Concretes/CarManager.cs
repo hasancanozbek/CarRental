@@ -6,6 +6,7 @@ using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Business;
+using Core.Utilities.MessageBrokers.RabbitMQ;
 using Core.Utilities.Results;
 using DataAccess.Abstracts;
 using Entities.Concretes;

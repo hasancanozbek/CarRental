@@ -5,6 +5,7 @@ using Business.ValidationRules.FluentValidation;
 using Core.Adapters.PersonValidation;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Business;
+using Core.Utilities.MessageBrokers;
 using Core.Utilities.Results;
 using DataAccess.Abstracts;
 using Entities.Concretes;
@@ -18,12 +19,14 @@ namespace Business.Concretes
         private readonly IRentDetailService _rentDetailService;
         private readonly IMapper _mapper;
         private readonly IPersonValidationService personValidationService;
-        public CustomerManager(ICustomerRepository customerRepository, IMapper mapper, IRentDetailService rentDetailService, IPersonValidationService personValidationService)
+        private readonly IMessageBrokerPublisherService messageBrokerPublisherService;
+        public CustomerManager(ICustomerRepository customerRepository, IMapper mapper, IRentDetailService rentDetailService, IPersonValidationService personValidationService, IMessageBrokerPublisherService messageBrokerPublisherService)
         { 
             _customerRepository = customerRepository;
             _mapper = mapper;
             _rentDetailService = rentDetailService;
             this.personValidationService = personValidationService;
+            this.messageBrokerPublisherService = messageBrokerPublisherService;
         }
 
         [ValidationAspect(typeof(CustomerValidator))]
@@ -64,10 +67,10 @@ namespace Business.Concretes
             return new SuccessDataResult<CustomerDto>(customerDto, "Customer information specified by id is listed.");
         }
 
-        public DataResult<RentDetail> GetRentDetailById(int id)
+        public DataResult<RentInformationDto> GetRentDetailById(int id)
         {
             var rentDetail = _rentDetailService.GetRentDetailById(id);
-            return new SuccessDataResult<RentDetail>(rentDetail.Data, "Rent detail specified by id is listed.");
+            return new SuccessDataResult<RentInformationDto>(rentDetail.Data, "Rent detail specified by id is listed.");
         }
 
         public Result RentCar(int customerId, int carId, string originAddress, string returnAddress)
@@ -78,6 +81,8 @@ namespace Business.Concretes
                 return result;
             }
             var rentDetail = _customerRepository.RentCar(customerId, carId, originAddress, returnAddress);
+
+            messageBrokerPublisherService.PublishMessage(rentDetail);
             return new SuccessResult("Car rented successfully.");
         }
 
@@ -107,8 +112,8 @@ namespace Business.Concretes
 
         private Result CheckCustomerHaveActiveRental(int customerId)
         {
-            var result = _rentDetailService.GetRentDetailByCustomerIdWithNullReturnDate(customerId);
-            if(result.Data != null)
+            var result = _rentDetailService.GetRentDetailByCustomerId(customerId);
+            if(result.Data.ReturnDate == null)
             {
                 return new ErrorResult("The car was previously rented but not delivered. Please return the existing car before renting a new one.");
             }

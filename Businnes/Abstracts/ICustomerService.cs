@@ -15,6 +15,6 @@ namespace Business.Abstracts
         Result RentCar(int customerId, int carId, string originAddress, string returnAddress);
         Result ReturnCar(int carId);
         DataResult<List<RentDetail>> GetAllRentDetailsByCustomerId(int customerId);
-        DataResult<RentDetail> GetRentDetailById(int id);
+        DataResult<RentInformationDto> GetRentDetailById(int id);
     }
 }
