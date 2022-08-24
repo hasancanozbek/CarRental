@@ -19,8 +19,8 @@ namespace Business.Concretes
         private readonly IRentDetailService _rentDetailService;
         private readonly IMapper _mapper;
         private readonly IPersonValidationService personValidationService;
-        private readonly IMessageBrokerPublisherService messageBrokerPublisherService;
-        public CustomerManager(ICustomerRepository customerRepository, IMapper mapper, IRentDetailService rentDetailService, IPersonValidationService personValidationService, IMessageBrokerPublisherService messageBrokerPublisherService)
+        private readonly IMessageBrokerService messageBrokerPublisherService;
+        public CustomerManager(ICustomerRepository customerRepository, IMapper mapper, IRentDetailService rentDetailService, IPersonValidationService personValidationService, IMessageBrokerService messageBrokerPublisherService)
         { 
             _customerRepository = customerRepository;
             _mapper = mapper;

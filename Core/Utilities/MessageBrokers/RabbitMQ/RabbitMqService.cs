@@ -5,7 +5,7 @@ using RabbitMQ.Client;
 
 namespace Core.Utilities.MessageBrokers.RabbitMQ
 {
-    public class RabbitMqPublisher : IMessageBrokerPublisherService
+    public class RabbitMqService : IMessageBrokerService
     {
         public void PublishMessage<T>(T message)
         {

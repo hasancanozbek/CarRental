@@ -1,7 +1,7 @@
 ﻿
 namespace Core.Utilities.MessageBrokers
 {
-    public interface IMessageBrokerPublisherService
+    public interface IMessageBrokerService
     {
         void PublishMessage<T>(T message);
     }

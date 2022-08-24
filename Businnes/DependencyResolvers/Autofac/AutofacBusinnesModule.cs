@@ -57,7 +57,7 @@ namespace Business.DependencyResolvers.Autofac
 
             builder.RegisterType<MernisAdapter>().As<IPersonValidationService>().SingleInstance();
 
-            builder.RegisterType<RabbitMqPublisher>().As<IMessageBrokerPublisherService>().SingleInstance();
+            builder.RegisterType<RabbitMqService>().As<IMessageBrokerService>().SingleInstance();
 
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 
