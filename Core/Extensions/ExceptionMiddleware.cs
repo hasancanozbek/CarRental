@@ -3,16 +3,19 @@ using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
 using System.Net;
+using Microsoft.Extensions.Logging;
 
 namespace Core.Extensions
 {
     public class ExceptionMiddleware
     {
         private readonly RequestDelegate _next;
+        private readonly ILogger<ExceptionMiddleware> _logger;
 
-        public ExceptionMiddleware(RequestDelegate next)
+        public ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger)
         {
             _next = next;
+            _logger = logger;
         }
 
         public async Task InvokeAsync(HttpContext httpContext)
@@ -23,6 +26,7 @@ namespace Core.Extensions
             }
             catch (Exception e)
             {
+                _logger.LogError(e, "An error has been thrown.");
                 await HandleExceptionAsync(httpContext, e);
             }
         }

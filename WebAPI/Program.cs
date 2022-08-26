@@ -15,6 +15,8 @@ using Serilog;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+//Add serilog for global logging service
 var logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration).Enrich.FromLogContext()
     .CreateLogger();

@@ -1,8 +1,6 @@
 ﻿using Business.Abstracts;
 using Entities.DTOs;
 using Microsoft.AspNetCore.Mvc;
-using Serilog;
-using ILogger = Microsoft.Extensions.Logging.ILogger;
 
 namespace WebAPI.Controllers
 {
@@ -11,12 +9,10 @@ namespace WebAPI.Controllers
     public class CarsController : ControllerBase
     {
         private readonly ICarService _carService;
-        private readonly ILogger<ICarService> _logger;
 
-        public CarsController(ICarService carService, ILogger<ICarService> logger)
+        public CarsController(ICarService carService)
         {
             _carService = carService;
-            _logger = logger;
         }
 
         [HttpPost("Add")]
@@ -38,7 +34,6 @@ namespace WebAPI.Controllers
             {
                 return Ok(result);
             }
-            _logger.LogError("Yavaş lan gaç tane alıyoğn");
             return BadRequest(result);
         }
 
