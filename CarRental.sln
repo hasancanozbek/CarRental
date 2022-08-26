@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleTest", "ConsoleTest\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", "{945B4978-EED3-46A1-ABA7-30E5CBA8C8EF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MailService", "MailService\MailService.csproj", "{839CACA6-6459-48C6-9D7F-EFC61907E88E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarRental.MailService", "MailService\CarRental.MailService.csproj", "{839CACA6-6459-48C6-9D7F-EFC61907E88E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarRental.UnitTest", "CarRental.UnitTest\CarRental.UnitTest.csproj", "{FE1524C5-9F94-474B-8970-F695A5E92CAA}"
 EndProject
