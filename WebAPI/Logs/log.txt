@@ -1,0 +1,18 @@
+2022-08-26 20:57:00.876 +03:00 [INF] User profile is available. Using 'C:\Users\hasan_xo6cgp9\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2022-08-26 20:57:01.302 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-08-26 20:57:01.306 +03:00 [INF] Hosting environment: Development
+2022-08-26 20:57:01.309 +03:00 [INF] Content root path: D:\Csharp\CarRental\WebAPI\
+2022-08-26 20:57:01.354 +03:00 [INF] Request starting HTTP/2 GET https://localhost:44318/swagger/index.html - -
+2022-08-26 20:57:02.622 +03:00 [INF] Request starting HTTP/2 GET https://localhost:44318/_framework/aspnetcore-browser-refresh.js - -
+2022-08-26 20:57:02.641 +03:00 [INF] Request starting HTTP/2 GET https://localhost:44318/_vs/browserLink - -
+2022-08-26 20:57:02.677 +03:00 [INF] Request finished HTTP/2 GET https://localhost:44318/_framework/aspnetcore-browser-refresh.js - - - 200 11982 application/javascript;+charset=utf-8 36.8711ms
+2022-08-26 20:57:02.767 +03:00 [INF] Request finished HTTP/2 GET https://localhost:44318/swagger/index.html - - - 200 - text/html;charset=utf-8 1421.6935ms
+2022-08-26 20:57:03.085 +03:00 [INF] Request finished HTTP/2 GET https://localhost:44318/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 444.3828ms
+2022-08-26 20:57:03.285 +03:00 [INF] Request starting HTTP/2 GET https://localhost:44318/swagger/v1/swagger.json - -
+2022-08-26 20:57:03.795 +03:00 [INF] Request finished HTTP/2 GET https://localhost:44318/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 509.6004ms
+2022-08-26 20:57:40.785 +03:00 [INF] Request starting HTTP/2 DELETE https://localhost:44318/api/Cars/Delete?id=12312 - -
+2022-08-26 20:57:41.107 +03:00 [INF] Executing endpoint 'WebAPI.Controllers.CarsController.Delete (WebAPI)'
+2022-08-26 20:57:41.151 +03:00 [INF] Route matched with {action = "Delete", controller = "Cars"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Delete(Int32) on controller WebAPI.Controllers.CarsController (WebAPI).
+2022-08-26 20:58:25.211 +03:00 [INF] Executed action WebAPI.Controllers.CarsController.Delete (WebAPI) in 44050.7078ms
+2022-08-26 20:58:25.219 +03:00 [INF] Executed endpoint 'WebAPI.Controllers.CarsController.Delete (WebAPI)'
+2022-08-26 20:58:30.390 +03:00 [INF] Request finished HTTP/2 DELETE https://localhost:44318/api/Cars/Delete?id=12312 - - - 500 - application/json 49604.5200ms
