@@ -6,11 +6,11 @@ using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Business;
-using Core.Utilities.MessageBrokers.RabbitMQ;
 using Core.Utilities.Results;
 using DataAccess.Abstracts;
 using Entities.Concretes;
 using Entities.DTOs;
+using Microsoft.Extensions.Logging;
 
 namespace Business.Concretes
 {
@@ -111,7 +111,7 @@ namespace Business.Concretes
             var carDtos = _mapper.Map<List<CarFeatureDto>>(cars);
             return new SuccessDataResult<List<CarFeatureDto>>(carDtos, "Cars are listed according to the desired price range.");
         }
-
+         
         [CacheRemoveAspect("ICarService.Get")]
         public Result Update(CarFeatureDto car)
         {
