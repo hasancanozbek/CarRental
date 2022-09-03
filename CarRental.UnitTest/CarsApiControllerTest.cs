@@ -93,5 +93,37 @@ namespace CarRental.UnitTest
             var returnCars = Assert.IsAssignableFrom<SuccessDataResult<List<CarFeatureDto>>>(okResult.Value);
             Assert.Equal(4, returnCars.Data.Count);
         }
+
+        [Fact]
+        public void Add_Execute_ReturnOkResult()
+        {
+            var carToAdded = carFeatureDtostList.First();
+            mockService.Setup(x => x.Add(carToAdded)).Returns(new SuccessResult());
+            var actionResult = controller.Add(carToAdded);
+            mockService.Verify(x => x.Add(carToAdded), Times.Once);
+            Assert.IsType<OkObjectResult>(actionResult);
+        }
+
+        [Theory]
+        [InlineData(1)]
+        public void Update_Execute_ReturnOkResult(int carId)
+        {
+            var carToUpdated = carFeatureDtostList.Find(c => c.Id == carId);
+            mockService.Setup(x => x.Update(carToUpdated)).Returns(new SuccessResult());
+            var actionResult = controller.Update(carToUpdated);
+            mockService.Verify(x => x.Update(carToUpdated), Times.Once);
+            Assert.IsType<OkObjectResult>(actionResult);
+        }
+
+        [Theory]
+        [InlineData(1)]
+        public void Delete_Execute_ReturnOkResult(int carId)
+        {
+            var carToDeleted = carFeatureDtostList.Find(c => c.Id == carId);
+            mockService.Setup(x => x.Delete(carToDeleted.Id)).Returns(new SuccessResult());
+            var actionResult = controller.Delete(carId);
+            mockService.Verify(x => x.Delete(carId),Times.Once);
+            Assert.IsType<OkObjectResult>(actionResult);
+        }
     }
 }
