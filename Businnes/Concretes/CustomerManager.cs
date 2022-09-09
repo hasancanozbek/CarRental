@@ -3,6 +3,7 @@ using AutoMapper;
 using Business.Abstracts;
 using Business.ValidationRules.FluentValidation;
 using Core.Adapters.PersonValidation;
+using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Business;
 using Core.Utilities.MessageBrokers;
@@ -73,6 +74,7 @@ namespace Business.Concretes
             return new SuccessDataResult<RentInformationDto>(rentDetail.Data, "Rent detail specified by id is listed.");
         }
 
+        [CacheRemoveAspect("ICarService.Get")]
         public Result RentCar(int customerId, int carId, string originAddress, string returnAddress)
         {
             var result = BusinessRules.Run(CheckCustomerHaveActiveRental(customerId));
@@ -86,6 +88,7 @@ namespace Business.Concretes
             return new SuccessResult("Car rented successfully.");
         }
 
+        [CacheRemoveAspect("ICarService.Get")]
         public Result ReturnCar(int carId)
         {
             _customerRepository.ReturnCar(carId);
@@ -112,8 +115,9 @@ namespace Business.Concretes
 
         private Result CheckCustomerHaveActiveRental(int customerId)
         {
-            var result = _rentDetailService.GetRentDetailByCustomerId(customerId);
-            if(result.Data.ReturnDate == null)
+            var resultRents = _rentDetailService.GetAllRentDetailsByCustomerId(customerId);
+            var activeRentDetail = resultRents.Data.Find(r => r.ReturnDate == null);
+            if(activeRentDetail != null)
             {
                 return new ErrorResult("The car was previously rented but not delivered. Please return the existing car before renting a new one.");
             }
