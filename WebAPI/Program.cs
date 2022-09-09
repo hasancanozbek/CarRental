@@ -22,6 +22,12 @@ var logger = new LoggerConfiguration()
     .CreateLogger();
 builder.Logging.AddSerilog(logger);
 
+//allow CORS    
+builder.Services.AddCors(options => options.AddPolicy("_apiCorsPolicy", builder =>
+{
+    builder.WithOrigins("http://localhost:44398").AllowAnyOrigin();
+}));
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -98,6 +104,8 @@ app.ConfigureCustomExceptionMiddleware();
 
 //Authentication Support
 app.UseAuthentication();
+
+app.UseCors("_apiCorsPolicy");
 
 app.UseHttpsRedirection();
 
