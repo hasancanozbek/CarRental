@@ -11,14 +11,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220809121115_initial")]
-    partial class initial
+    [Migration("20220913131356_price_updated")]
+    partial class price_updated
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.7")
+                .HasAnnotation("ProductVersion", "6.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("Core.Entities.Concretes.OperationClaim", b =>
@@ -286,7 +286,8 @@ namespace DataAccess.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(65,30)");
+                        .HasPrecision(9, 2)
+                        .HasColumnType("decimal(9,2)");
 
                     b.Property<DateTime>("RentalDate")
                         .HasColumnType("datetime(6)");
@@ -317,6 +318,9 @@ namespace DataAccess.Migrations
                     b.Property<string>("NationalId")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<int>("YearOfBirth")
+                        .HasColumnType("int");
 
                     b.ToTable("Customers", (string)null);
                 });

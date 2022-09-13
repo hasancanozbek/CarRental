@@ -10,7 +10,6 @@ using Core.Utilities.Results;
 using DataAccess.Abstracts;
 using Entities.Concretes;
 using Entities.DTOs;
-using Microsoft.Extensions.Logging;
 
 namespace Business.Concretes
 {
@@ -43,6 +42,7 @@ namespace Business.Concretes
             return new SuccessResult("Car added to database successfully.");
         }
 
+        [SecuredOperation("admin")]
         [CacheRemoveAspect("ICarService.Get")]
         public Result Delete(int id)
         {
@@ -111,7 +111,8 @@ namespace Business.Concretes
             var carDtos = _mapper.Map<List<CarFeatureDto>>(cars);
             return new SuccessDataResult<List<CarFeatureDto>>(carDtos, "Cars are listed according to the desired price range.");
         }
-         
+
+        [SecuredOperation("manager,admin,customer support")]
         [CacheRemoveAspect("ICarService.Get")]
         public Result Update(CarFeatureDto car)
         {

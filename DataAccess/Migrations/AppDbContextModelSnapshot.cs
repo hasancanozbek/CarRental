@@ -284,7 +284,8 @@ namespace DataAccess.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(65,30)");
+                        .HasPrecision(9, 2)
+                        .HasColumnType("decimal(9,2)");
 
                     b.Property<DateTime>("RentalDate")
                         .HasColumnType("datetime(6)");
