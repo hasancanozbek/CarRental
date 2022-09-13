@@ -45,6 +45,9 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<RentDetailManager>().As<IRentDetailService>().SingleInstance();
             builder.RegisterType<EfRentDetailRepository>().As<IRentDetailRepository>().SingleInstance();
 
+            builder.RegisterType<BranchOfficeManager>().As<IBranchOfficeService>().SingleInstance();
+            builder.RegisterType<EfBranchOfficeRepository>().As<IBranchOfficeRepository>().SingleInstance();
+
             builder.RegisterType<CarImageManager>().As<ICarImageService>().SingleInstance();
             builder.RegisterType<EfCarImageRepository>().As<ICarImageRepository>().SingleInstance();
             builder.RegisterType<FileHelper>().As<IFileHelper>().SingleInstance();

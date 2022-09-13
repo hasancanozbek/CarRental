@@ -12,8 +12,8 @@ namespace Entities.Concretes
         public decimal Price { get; set; }
         public DateTime RentalDate { get; set; }
         public DateTime? ReturnDate { get; set; }
-        public string OriginAddress { get; set; }
-        public string? ReturnAddress { get; set; }
+        public int? OriginOfficeId { get; set; }
+        public int? ReturnOfficeId { get; set; }
 
 
         [JsonIgnore]
@@ -21,5 +21,12 @@ namespace Entities.Concretes
 
         [JsonIgnore]
         public Car Car { get; set; }
+
+        [JsonIgnore] 
+        public BranchOffice OriginOffice { get; set; }
+
+        [JsonIgnore]
+        public BranchOffice ReturnOffice { get; set; }
+
     }
 }

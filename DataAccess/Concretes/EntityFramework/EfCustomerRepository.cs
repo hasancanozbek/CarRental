@@ -19,7 +19,7 @@ namespace DataAccess.Concretes.EntityFramework
             }
         }
 
-        public RentInformationDto RentCar(int customerId, int carId, string originAddress, string returnAddress)
+        public RentInformationDto RentCar(int customerId, int carId, int originOffice, int returnOffice)
         {
             using (AppDbContext context = new())
             {
@@ -33,8 +33,8 @@ namespace DataAccess.Concretes.EntityFramework
                     Price = car.Price,
                     RentalDate = DateTime.Now,
                     ReturnDate = null,
-                    OriginAddress = originAddress,
-                    ReturnAddress = returnAddress
+                    OriginOfficeId = originOffice,
+                    ReturnOfficeId = returnOffice
                 });
                 RentInformationDto rentInformation = new RentInformationDto
                 {

@@ -35,7 +35,7 @@ namespace Business
 
         public DataResult<RentDetail> GetRentDetailByCustomerId(int customerId)
         {
-            var rentDetail = rentDetailRepository.Get(r => r.CustomerId == customerId);
+            var rentDetail = rentDetailRepository.Get(r => r.CustomerId == customerId && r.ReturnDate==null);
             return new SuccessDataResult<RentDetail>(rentDetail);
         }
     }

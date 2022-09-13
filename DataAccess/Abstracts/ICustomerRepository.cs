@@ -8,7 +8,7 @@ namespace DataAccess.Abstracts
     public interface ICustomerRepository : IEntityRepository<Customer>
     {
         void Delete(int id);
-        RentInformationDto RentCar(int customerId, int carId, string originAddress, string returnAddress);
+        RentInformationDto RentCar(int customerId, int carId, int originOffice, int returnOffice);
         void ReturnCar(int carId);
     }
 }

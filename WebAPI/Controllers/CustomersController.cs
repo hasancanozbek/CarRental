@@ -73,9 +73,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("RentCar")]
-        public IActionResult RentCar(int customerId, int carId, string originAddress, string returnAddress)
+        public IActionResult RentCar(int customerId, int carId, int originOffice, int returnOffice)
         {
-            var result = _customerService.RentCar(customerId, carId, originAddress, returnAddress);
+            var result = _customerService.RentCar(customerId, carId, originOffice, returnOffice);
             if (result.Status)
             {
                 return Ok(result);
@@ -84,9 +84,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("ReturnCar")]
-        public IActionResult ReturnCar(int carId)
+        public IActionResult ReturnCar(int carId, int customerId)
         {
-            var result = _customerService.ReturnCar(carId);
+            var result = _customerService.ReturnCar(carId, customerId);
             if (result.Status)
             {
                 return Ok(result);

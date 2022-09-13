@@ -1,6 +1,7 @@
 ﻿
 using AutoMapper;
 using Business.Abstracts;
+using Business.BusinessAspects.Autofac;
 using Business.ValidationRules.FluentValidation;
 using Core.Adapters.PersonValidation;
 using Core.Aspects.Autofac.Caching;
@@ -74,23 +75,30 @@ namespace Business.Concretes
             return new SuccessDataResult<RentInformationDto>(rentDetail.Data, "Rent detail specified by id is listed.");
         }
 
+        [SecuredOperation("customer,admin,customer support")]
         [CacheRemoveAspect("ICarService.Get")]
-        public Result RentCar(int customerId, int carId, string originAddress, string returnAddress)
+        public Result RentCar(int customerId, int carId, int originOffice, int returnOffice)
         {
             var result = BusinessRules.Run(CheckCustomerHaveActiveRental(customerId));
             if(result != null)
             {
                 return result;
             }
-            var rentDetail = _customerRepository.RentCar(customerId, carId, originAddress, returnAddress);
+            var rentDetail = _customerRepository.RentCar(customerId, carId, originOffice, returnOffice);
 
             messageBrokerPublisherService.PublishMessage(rentDetail);
             return new SuccessResult("Car rented successfully.");
         }
 
+        [SecuredOperation("customer,admin,customer support")]
         [CacheRemoveAspect("ICarService.Get")]
-        public Result ReturnCar(int carId)
+        public Result ReturnCar(int carId, int customerId)
         {
+            var result = BusinessRules.Run(CheckIfCarRentedToCustomer(customerId, carId));
+            if (result != null)
+            {
+                return result;
+            }
             _customerRepository.ReturnCar(carId);
             return new SuccessResult("Car returned successfully.");
         }
@@ -119,9 +127,20 @@ namespace Business.Concretes
             var activeRentDetail = resultRents.Data.Find(r => r.ReturnDate == null);
             if(activeRentDetail != null)
             {
-                return new ErrorResult("The car was previously rented but not delivered. Please return the existing car before renting a new one.");
+                return new ErrorResult("A car was previously rented but not delivered. Please return the existing car before renting a new one.");
             }
             return new SuccessResult();
+        }
+
+        private Result CheckIfCarRentedToCustomer(int customerId, int carId)
+        {
+            var resultRent = _rentDetailService.GetRentDetailByCustomerId(customerId);
+            var result = resultRent.Data.CarId == carId;
+            if (result)
+            {
+                return new SuccessResult();
+            }
+            return  new ErrorResult("No records were found that match the given customer and car.");
         }
 
         private Result CheckCustomerRealPerson(Customer customer)
